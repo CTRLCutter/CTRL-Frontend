@@ -1,6 +1,7 @@
 package com.ctrlcutter.frontend.views;
 
-import com.ctrlcutter.frontend.util.DummyComponent;
+import com.ctrlcutter.frontend.util.HorizontalDummyComponent;
+import com.ctrlcutter.frontend.util.VerticalDummyComponent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
@@ -22,13 +23,13 @@ public class MainView extends VerticalLayout {
 
         HorizontalLayout topLayout = new HorizontalLayout();
 
-        Image logo = new Image("images/ctrlcutter_logo_black_white.png", "placeholder plant");
+        Image logo = new Image("images/ctrlcutter_logo_black_white.png", "ctrlcutter logo");
         logo.setWidth("100px");
         logo.setHeight("100px");
         topLayout.add(logo);
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
-        DummyComponent whiteSpaceComponent = new DummyComponent("80%");
+        HorizontalDummyComponent whiteSpaceComponent = new HorizontalDummyComponent("80%");
 
         Button loginButton = new Button("Log In");
         Button signupButton = new Button("Sign Up");
@@ -48,9 +49,13 @@ public class MainView extends VerticalLayout {
 
         add(topLayout);
 
+        HorizontalLayout mainLayout = new HorizontalLayout();
+        mainLayout.setWidthFull();
+        
         VerticalLayout mainContentLayout = new VerticalLayout();
 
         H2 titleText = new H2("Take Control of your Macros");
+        titleText.setId("titleText");
 
         Paragraph infoText1 = new Paragraph("Create your own custom macros for everything.");
         Paragraph infoText2 = new Paragraph("No coding. No hassle.");
@@ -68,10 +73,27 @@ public class MainView extends VerticalLayout {
 
         mainContentLayout.add(titleText, infoText1, infoText2, infoText3, greenSignupButton, tryWithoutLink);
 
-        mainContentLayout.setWidthFull();
+        mainContentLayout.setWidth("70%");
+        mainContentLayout.setId("mainContentLayout");
 
-        add(mainContentLayout);
+        mainLayout.add(mainContentLayout);
+        
+        VerticalLayout keyboardContentLayout = new VerticalLayout();
+        VerticalDummyComponent dummyComponent = new VerticalDummyComponent("40%");
 
+        keyboardContentLayout.add(dummyComponent);
+        
+        Image keyboardImage = new Image("images/keyboard.png", "keyboard icon");
+        keyboardImage.setWidth("100%");
+        keyboardContentLayout.add(keyboardImage);
+        keyboardContentLayout.setId("keyboardContentLayout");
+        
+        keyboardContentLayout.setWidth("30%");
+        
+        mainLayout.add(keyboardContentLayout);
+
+        add(mainLayout);
+        
         setWidthFull();
         setHeightFull();
 
