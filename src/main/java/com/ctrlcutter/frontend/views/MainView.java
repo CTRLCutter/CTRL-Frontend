@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -19,9 +20,11 @@ import com.vaadin.flow.router.RouteAlias;
 public class MainView extends VerticalLayout {
 
     public MainView() {
+
         setMargin(true);
 
         HorizontalLayout topLayout = new HorizontalLayout();
+        topLayout.setId("topLayout");
 
         Image logo = new Image("images/ctrlcutter_logo_black_white.png", "ctrlcutter logo");
         logo.setWidth("100px");
@@ -29,6 +32,8 @@ public class MainView extends VerticalLayout {
         topLayout.add(logo);
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
+        buttonLayout.setId("buttonLayout");
+
         HorizontalDummyComponent whiteSpaceComponent = new HorizontalDummyComponent("80%");
 
         Button loginButton = new Button("Log In");
@@ -51,7 +56,7 @@ public class MainView extends VerticalLayout {
 
         HorizontalLayout mainLayout = new HorizontalLayout();
         mainLayout.setWidthFull();
-        
+
         VerticalLayout mainContentLayout = new VerticalLayout();
 
         H2 titleText = new H2("Take Control of your Macros");
@@ -66,6 +71,8 @@ public class MainView extends VerticalLayout {
             Notification.show("Another signup stub");
         });
 
+        greenSignupButton.setClassName("signupButton");
+
         Paragraph tryWithoutLink = new Paragraph("Try without account");
         tryWithoutLink.addClickListener(e -> {
             Notification.show("Try Without Stub");
@@ -77,25 +84,29 @@ public class MainView extends VerticalLayout {
         mainContentLayout.setId("mainContentLayout");
 
         mainLayout.add(mainContentLayout);
-        
+
         VerticalLayout keyboardContentLayout = new VerticalLayout();
         VerticalDummyComponent dummyComponent = new VerticalDummyComponent("40%");
 
         keyboardContentLayout.add(dummyComponent);
-        
+
         Image keyboardImage = new Image("images/keyboard.png", "keyboard icon");
-        keyboardImage.setWidth("100%");
+        keyboardImage.setId("keyboardIcon");
+        keyboardImage.setWidth("350px");
         keyboardContentLayout.add(keyboardImage);
         keyboardContentLayout.setId("keyboardContentLayout");
-        
+
+        Span circle = new Span();
+        circle.setId("circle");
+        keyboardContentLayout.add(circle);
+
         keyboardContentLayout.setWidth("30%");
-        
+
         mainLayout.add(keyboardContentLayout);
 
         add(mainLayout);
-        
+
         setWidthFull();
         setHeightFull();
-
     }
 }

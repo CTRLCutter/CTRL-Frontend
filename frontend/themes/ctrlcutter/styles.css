@@ -1,12 +1,24 @@
 @import url('./main-layout.css');
-@import url('lumo-css-framework/all-classes.css');
-@import url('line-awesome/dist/line-awesome/css/line-awesome.min.css');
-@include font-face('Nunito', '/../../../src/main/resources/META-INF/fonts/Nunito-Regular.ttf', 400, normal);
 
+@import url('lumo-css-framework/all-classes.css');
+
+@import url('line-awesome/dist/line-awesome/css/line-awesome.min.css');
+
+@include font-face ('Nunito', '/../../../src/main/resources/META-INF/fonts/Nunito-Regular.ttf ', 400, normal );
 
 * {
 	font-family: Nunito;
 	font-weight: 500;
+	font-size: var(--lumo-font-size-s);
+}
+
+body {
+   height: 100%;
+   overflow-y: hidden;
+}
+
+#topLayout {
+	margin-top: 0 !important;
 }
 
 #mainContentLayout {
@@ -19,4 +31,28 @@
 
 #titleText {
 	font-weight: 700;
+	margin-top: 0;
+}
+
+#keyboardIcon {
+	margin: -200px 0 0 -200px !important;
+}
+
+#buttonLayout {
+	padding-right: 20px !important;
+}
+
+.signupButton {
+	margin-top: 0;
+}
+
+#circle {
+	height: 1300px;
+	width: 2000px;
+	margin: -340px 0 0 -350px;
+	padding: 0;
+	background-color: #D9EAFF;
+	border-radius: 50%;
+	display: inline-block;
+	z-index: -1;
 }
