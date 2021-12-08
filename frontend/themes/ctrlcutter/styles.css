@@ -36,6 +36,8 @@ body {
 
 #keyboardIcon {
 	margin: -200px 0 0 -200px !important;
+	padding-left: 40px;
+	padding-top: 20px;
 }
 
 #buttonLayout {
@@ -44,6 +46,12 @@ body {
 
 .signupButton {
 	margin-top: 0;
+	background-color: #41F26D;
+	color: #113F12 !important;
+}
+
+.signupButton:hover {
+	background-color: #39D65B;
 }
 
 #circle {
@@ -55,4 +63,37 @@ body {
 	border-radius: 50%;
 	display: inline-block;
 	z-index: -1;
+}
+
+#tryWithoutLink {
+	font-size: 12px !important;
+	padding-left: 8px;
+}
+
+#dividerLine {
+	margin-top: -40px;
+	margin-bottom: 40px;
+	color: #8795A1;
+	height: 5px;
+	width: 80%;
+	margin-left: 20%;
+}
+
+#loginButton {
+	background-color: transparent;
+	color: #3B4651;
+}
+
+#basicSignupButton {
+	background-color: #44FF70;
+	border-color: #34C759;
+	border-radius: 10px;
+	border-style: solid;
+  	border-width: 3px;
+	
+	color: #3C4752;
+}
+
+#basicSignupButton:hover {
+	background-color: #41F26A;
 }

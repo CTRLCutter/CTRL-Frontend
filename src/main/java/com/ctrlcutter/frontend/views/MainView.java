@@ -4,6 +4,7 @@ import com.ctrlcutter.frontend.util.HorizontalDummyComponent;
 import com.ctrlcutter.frontend.util.VerticalDummyComponent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -37,7 +38,10 @@ public class MainView extends VerticalLayout {
         HorizontalDummyComponent whiteSpaceComponent = new HorizontalDummyComponent("80%");
 
         Button loginButton = new Button("Log In");
+        loginButton.setId("loginButton");
+        
         Button signupButton = new Button("Sign Up");
+        signupButton.setId("basicSignupButton");
 
         loginButton.addClickListener(e -> {
             Notification.show("Login Stub");
@@ -53,6 +57,12 @@ public class MainView extends VerticalLayout {
         topLayout.setWidthFull();
 
         add(topLayout);
+        
+        
+        Hr horizontalLine = new Hr();
+        horizontalLine.setId("dividerLine");
+        
+        add(horizontalLine);
 
         HorizontalLayout mainLayout = new HorizontalLayout();
         mainLayout.setWidthFull();
@@ -74,6 +84,8 @@ public class MainView extends VerticalLayout {
         greenSignupButton.setClassName("signupButton");
 
         Paragraph tryWithoutLink = new Paragraph("Try without account");
+        tryWithoutLink.setId("tryWithoutLink");
+
         tryWithoutLink.addClickListener(e -> {
             Notification.show("Try Without Stub");
         });
@@ -92,7 +104,7 @@ public class MainView extends VerticalLayout {
 
         Image keyboardImage = new Image("images/keyboard.png", "keyboard icon");
         keyboardImage.setId("keyboardIcon");
-        keyboardImage.setWidth("350px");
+        keyboardImage.setWidth("320px");
         keyboardContentLayout.add(keyboardImage);
         keyboardContentLayout.setId("keyboardContentLayout");
 
