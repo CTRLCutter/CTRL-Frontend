@@ -73,7 +73,8 @@ body {
 #dividerLine {
 	margin-top: -40px;
 	margin-bottom: 40px;
-	color: #8795A1;
+	color: #B8C2CC;
+	background-color: #B8C2CC;
 	height: 5px;
 	width: 80%;
 	margin-left: 20%;
