@@ -1,4 +1,4 @@
-package com.ctrlcutter.frontend.views;
+package com.ctrlcutter.frontend.views.mainview;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
