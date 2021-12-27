@@ -2,6 +2,7 @@ package com.ctrlcutter.frontend.views;
 
 import com.ctrlcutter.frontend.util.HorizontalDummyComponent;
 import com.ctrlcutter.frontend.util.VerticalDummyComponent;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Hr;
@@ -39,7 +40,7 @@ public class MainView extends VerticalLayout {
 
         Button loginButton = new Button("Log In");
         loginButton.setId("loginButton");
-        
+
         Button signupButton = new Button("Sign Up");
         signupButton.setId("basicSignupButton");
 
@@ -57,11 +58,10 @@ public class MainView extends VerticalLayout {
         topLayout.setWidthFull();
 
         add(topLayout);
-        
-        
+
         Hr horizontalLine = new Hr();
         horizontalLine.setId("dividerLine");
-        
+
         add(horizontalLine);
 
         HorizontalLayout mainLayout = new HorizontalLayout();
@@ -87,7 +87,7 @@ public class MainView extends VerticalLayout {
         tryWithoutLink.setId("tryWithoutLink");
 
         tryWithoutLink.addClickListener(e -> {
-            Notification.show("Try Without Stub");
+            UI.getCurrent().navigate(ShortcutMenuView.class);
         });
 
         mainContentLayout.add(titleText, infoText1, infoText2, infoText3, greenSignupButton, tryWithoutLink);

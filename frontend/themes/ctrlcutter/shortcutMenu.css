@@ -1,0 +1,14 @@
+html {
+	height: 100%;
+}
+
+#menuView {
+	width: 100% !important;
+	height: 100% !important;
+}
+
+#sidebarLayout {
+	width: 35% !important;
+	height: 100%;
+	background-color: #096CE7;
+}
