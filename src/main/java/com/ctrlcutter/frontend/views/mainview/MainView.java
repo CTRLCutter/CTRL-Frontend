@@ -1,13 +1,9 @@
 package com.ctrlcutter.frontend.views.mainview;
 
-import com.ctrlcutter.frontend.util.CTRLCutterConstants;
-import com.ctrlcutter.frontend.util.VerticalDummyComponent;
 import com.ctrlcutter.frontend.views.mainview.sublayouts.KeyboardContentLayout;
 import com.ctrlcutter.frontend.views.mainview.sublayouts.MainContentLayout;
 import com.ctrlcutter.frontend.views.mainview.sublayouts.TopLayout;
 import com.vaadin.flow.component.html.Hr;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
