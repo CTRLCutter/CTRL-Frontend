@@ -14,8 +14,8 @@ public class MainContentLayout extends VerticalLayout {
 
         H2 titleText = new H2("Take Control of your Macros");
         titleText.setId("titleText");
-
-        Paragraph infoText1 = new Paragraph("Create your own custom macros for everything.");
+        
+        Paragraph infoText1 = new Paragraph(getTranslation("custom_macros_text"));
         Paragraph infoText2 = new Paragraph("No coding. No hassle.");
         Paragraph infoText3 = new Paragraph("Everything at your hands.");
 
