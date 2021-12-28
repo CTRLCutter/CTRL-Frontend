@@ -12,7 +12,7 @@ public class MainContentLayout extends VerticalLayout {
 
     public MainContentLayout() {
 
-        H2 titleText = new H2("Take Control of your Macros");
+        H2 titleText = new H2(getTranslation("custom_macros_text_header"));
         titleText.setId("titleText");
         
         Paragraph infoText1 = new Paragraph(getTranslation("custom_macros_text_1"));
