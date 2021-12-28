@@ -15,9 +15,9 @@ public class MainContentLayout extends VerticalLayout {
         H2 titleText = new H2("Take Control of your Macros");
         titleText.setId("titleText");
         
-        Paragraph infoText1 = new Paragraph(getTranslation("custom_macros_text"));
-        Paragraph infoText2 = new Paragraph("No coding. No hassle.");
-        Paragraph infoText3 = new Paragraph("Everything at your hands.");
+        Paragraph infoText1 = new Paragraph(getTranslation("custom_macros_text_1"));
+        Paragraph infoText2 = new Paragraph(getTranslation("custom_macros_text_2"));
+        Paragraph infoText3 = new Paragraph(getTranslation("custom_macros_text_3"));
 
         Button greenSignupButton = generateGreenSignupButton();
 
@@ -31,7 +31,7 @@ public class MainContentLayout extends VerticalLayout {
 
     private Button generateGreenSignupButton() {
 
-        Button greenSignupButton = new Button("Sign up for free");
+        Button greenSignupButton = new Button(getTranslation("signup_text"));
         greenSignupButton.addClickListener(e -> {
             Notification.show("Another signup stub");
         });
@@ -43,7 +43,7 @@ public class MainContentLayout extends VerticalLayout {
 
     private Paragraph generateTryWithoutLink() {
 
-        Paragraph tryWithoutLink = new Paragraph("Try without account");
+        Paragraph tryWithoutLink = new Paragraph(getTranslation("try_without_account_text"));
         tryWithoutLink.setId("tryWithoutLink");
 
         tryWithoutLink.addClickListener(e -> {

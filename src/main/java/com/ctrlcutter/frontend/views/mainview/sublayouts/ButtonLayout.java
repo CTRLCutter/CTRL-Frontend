@@ -10,10 +10,10 @@ public class ButtonLayout extends HorizontalLayout {
 
         setId("buttonLayout");
 
-        Button loginButton = new Button("Log In");
+        Button loginButton = new Button(getTranslation("login_btn_text"));
         loginButton.setId("loginButton");
 
-        Button signupButton = new Button("Sign Up");
+        Button signupButton = new Button(getTranslation("signup_btn_text"));
         signupButton.setId("basicSignupButton");
 
         loginButton.addClickListener(e -> {
