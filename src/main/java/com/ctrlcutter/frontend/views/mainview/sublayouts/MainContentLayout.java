@@ -1,6 +1,6 @@
 package com.ctrlcutter.frontend.views.mainview.sublayouts;
 
-import com.ctrlcutter.frontend.views.ShortcutMenuView;
+import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
