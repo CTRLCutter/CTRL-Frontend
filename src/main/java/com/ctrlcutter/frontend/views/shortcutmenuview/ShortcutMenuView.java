@@ -1,18 +1,9 @@
 package com.ctrlcutter.frontend.views.shortcutmenuview;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.ctrlcutter.frontend.util.CTRLCutterConstants;
-import com.vaadin.flow.component.button.Button;
+import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.ContentLayout;
+import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.SidebarLayout;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -25,48 +16,6 @@ public class ShortcutMenuView extends HorizontalLayout {
 
         setId("menuView");
 
-        VerticalLayout sidebarLayout = new VerticalLayout();
-        sidebarLayout.setId("sidebarLayout");
-
-        HorizontalLayout sidebarHeaderLayout = new HorizontalLayout();
-        sidebarHeaderLayout.add(new H2("Test Header"));
-
-        sidebarHeaderLayout.setId("sidebarHeaderLayout");
-
-        ListBox<String> listBox = new ListBox<>();
-
-        List<ShortcutMenuSidebarOptions> options = ShortcutMenuSidebarOptions.getAllOptions();
-
-        listBox.setItems(options.stream().map(option -> getTranslation(option.getTranslationKey())).collect(Collectors.toList()));
-
-        //listBox.setItems("Overview", "Shortcuts", "Create", "Settings");
-        //listBox.setValue("Overview");
-
-        sidebarLayout.add(sidebarHeaderLayout);
-        sidebarLayout.add(listBox);
-
-        VerticalLayout contentLayout = new VerticalLayout();
-        contentLayout.setId("shortcutContentLayout");
-
-        Image keyboardImage = new Image(CTRLCutterConstants.KEYBOARD_ICON_FILEPATH, "keyboard icon");
-        keyboardImage.setWidth("320px");
-        keyboardImage.setId("shortcutKeyboardImage");
-        contentLayout.add(keyboardImage);
-
-        VerticalLayout textContentLayout = new VerticalLayout();
-        textContentLayout.setId("textContentLayout");
-        H1 header = new H1(getTranslation("shortcut_content_header"));
-
-        Paragraph subtitleText = new Paragraph();
-        subtitleText.getElement().setProperty("innerHTML", getTranslation("subtitle_text"));
-
-        Button createShortcutButton = new Button(getTranslation("create_shortcut_button"));
-        createShortcutButton.setId("createShortcutButton");
-
-        textContentLayout.add(header, subtitleText, createShortcutButton);
-        contentLayout.add(textContentLayout);
-
-        add(sidebarLayout);
-        add(contentLayout);
+        add(new SidebarLayout(), new ContentLayout());
     }
 }
