@@ -1,5 +1,8 @@
 package com.ctrlcutter.frontend.views.shortcutmenuview;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.ctrlcutter.frontend.util.CTRLCutterConstants;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -31,8 +34,13 @@ public class ShortcutMenuView extends HorizontalLayout {
         sidebarHeaderLayout.setId("sidebarHeaderLayout");
 
         ListBox<String> listBox = new ListBox<>();
-        listBox.setItems("Overview", "Shortcuts", "Create", "Settings");
-        listBox.setValue("Overview");
+
+        List<ShortcutMenuSidebarOptions> options = ShortcutMenuSidebarOptions.getAllOptions();
+
+        listBox.setItems(options.stream().map(option -> getTranslation(option.getTranslationKey())).collect(Collectors.toList()));
+
+        //listBox.setItems("Overview", "Shortcuts", "Create", "Settings");
+        //listBox.setValue("Overview");
 
         sidebarLayout.add(sidebarHeaderLayout);
         sidebarLayout.add(listBox);
@@ -47,12 +55,12 @@ public class ShortcutMenuView extends HorizontalLayout {
 
         VerticalLayout textContentLayout = new VerticalLayout();
         textContentLayout.setId("textContentLayout");
-        H1 header = new H1("Create a Shortcut");
+        H1 header = new H1(getTranslation("shortcut_content_header"));
 
         Paragraph subtitleText = new Paragraph();
-        subtitleText.getElement().setProperty("innerHTML", "Enhance your productivity<br>by creating a new shortcut.");
+        subtitleText.getElement().setProperty("innerHTML", getTranslation("subtitle_text"));
 
-        Button createShortcutButton = new Button("Create Shortcut");
+        Button createShortcutButton = new Button(getTranslation("create_shortcut_button"));
         createShortcutButton.setId("createShortcutButton");
 
         textContentLayout.add(header, subtitleText, createShortcutButton);
