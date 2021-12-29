@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.i18n.I18NProvider;
 
 public class TranslationProvider implements I18NProvider {
@@ -51,4 +52,7 @@ public class TranslationProvider implements I18NProvider {
         return value;
     }
 
+    public static void changeApplicationLocale(Locale locale) {
+        UI.getCurrent().setLocale(locale);
+    }
 }
