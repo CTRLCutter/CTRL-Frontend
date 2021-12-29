@@ -1,17 +1,6 @@
-/*html {
-	height: 100%;
-	overflow-y: hidden !important;
-}
-
-#menuView {
-	width: 100% !important;
-	height: 100% !important;
-}*/
-
 body {
 	overflow-y: hidden !important;
 	overflow-x: hidden !important;
-	/*height: 100vh !important;*/
 }
 
 #menuView {
