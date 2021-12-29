@@ -7,7 +7,8 @@ import com.vaadin.flow.component.html.Image;
 
 public enum ShortcutMenuSidebarOptions {
 
-    OVERVIEW(new Image(), "sidebar_overview"),
+    // TODO MAKE AND ADD IMAGES
+    OVERVIEW(new Image("icons/chartIcon.png", "overview icon"), "sidebar_overview"),
     SHORTCUTS(new Image(), "sidebar_shortcuts"),
     CREATE(new Image(), "sidebar_create"),
     SETTINGS(new Image(), "sidebar_settings");
