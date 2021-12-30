@@ -1,27 +1,24 @@
 pipeline {
-
-    agent any
+    agent {
+        docker {
+            image 'maven:3-alpine' 
+            args '-v /root/.m2:/root/.m2' 
+        }
+    }
     stages {
-
-        stage('Checkout Codebase'){
-            steps{
-                checkout scm: [$class: 'GitSCM', branches: [[name: '*/main']],userRemoteConfigs:
-                [[credentialsId: 'github', url: 'git@github.com:CTRLCutter/CTRL-Frontend.git']]]
+        stage('Build') { 
+            steps {
+                sh 'mvn -B -DskipTests clean package' 
             }
         }
-
-        stage('Build'){
-            steps{
-                sh 'mkdir lib'
-                sh 'cd lib/ ; wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.7.0/junit-platform-console-standalone-1.7.0-all.jar'
-                sh 'cd src/test/java/com/ctrlcutter/frontend/test/translation ; javac -cp "../../../../../../../../lib/junit-platform-console-standalone-1.7.0-all.jar" TranslationProviderTest.java'
+        stage('Test') {
+            steps {
+                sh 'mvn test'
             }
-        }
-
-        stage('Test'){
-            steps{
-                sh 'cd src/ ; java -jar ../lib/junit-platform-console-standalone-1.7.0-all.jar -cp "." --select-class CarTest --reports-dir="reports"'
-                junit 'src/reports/*-jupiter.xml'
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
             }
         }
     }
