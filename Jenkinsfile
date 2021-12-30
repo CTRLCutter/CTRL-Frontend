@@ -5,7 +5,6 @@ pipeline {
 
         stage('Checkout Codebase'){
             steps{
-                cleanWs()
                 checkout scm: [$class: 'GitSCM', branches: [[name: '*/main']],userRemoteConfigs:
                 [[credentialsId: 'github', url: 'git@github.com:CTRLCutter/CTRL-Frontend.git']]]
             }
