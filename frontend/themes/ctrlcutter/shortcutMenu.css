@@ -50,3 +50,25 @@ body {
 	margin-left: 10px;
 	color: #3C4752;
 }
+
+#sidebarListBox {
+	
+}
+
+.listRowItemSpan {
+	font-size: 20px;
+}
+
+.listRowItemSpan:hover {
+	color: #B8C2CC;
+}
+
+.spanColumn {
+	margin-left: 10px;
+}
+
+#headerLogo {
+	margin: 10px 0 0 30px;
+	width: 90px;
+	height: 90px;
+}

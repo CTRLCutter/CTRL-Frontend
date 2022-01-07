@@ -17,6 +17,8 @@ public class SidebarListBox extends ListBox<ShortcutMenuSidebarOptions> {
 
     public SidebarListBox() {
 
+        setId("sidebarListBox");
+        
         rowLayouts.values().forEach(layout -> layout.getElement().removeFromTree());      
         
         // TODO: It reloads now but it doesnt work if 2 or more panels are open... FIX!!! I really don't know why... :/
@@ -42,8 +44,10 @@ public class SidebarListBox extends ListBox<ShortcutMenuSidebarOptions> {
         row.setAlignItems(FlexComponent.Alignment.CENTER);
 
         Span name = new Span(getTranslation(option.getTranslationKey()));
+        name.setClassName("listRowItemSpan");
 
         VerticalLayout column = new VerticalLayout(name);
+        column.setClassName("spanColumn");
         column.setPadding(false);
         column.setSpacing(false);
 

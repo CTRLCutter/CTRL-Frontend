@@ -27,7 +27,7 @@ public class TopLayout extends HorizontalLayout {
     
     private Image getCTRLCutterLogo() {
 
-        Image logo = new Image(CTRLCutterConstants.CTRLCUTTER_LOGO_FILEPATH, "ctrlcutter logo");
+        Image logo = new Image(CTRLCutterConstants.CTRLCUTTER_LOGO_FILEPATH_BLACK, "ctrlcutter logo");
         logo.setWidth("100px");
         logo.setHeight("100px");
 
