@@ -1,5 +1,7 @@
 package com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts;
 
+import com.ctrlcutter.frontend.views.shortcutcreationform.ShortcutCreationForm;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
@@ -17,6 +19,10 @@ public class TextContentLayout extends VerticalLayout {
 
         Button createShortcutButton = new Button(getTranslation("create_shortcut_button"));
         createShortcutButton.setId("createShortcutButton");
+
+        createShortcutButton.addClickListener(e -> {
+            UI.getCurrent().navigate(ShortcutCreationForm.class);
+        });
 
         add(header, subtitleText, createShortcutButton);
     }

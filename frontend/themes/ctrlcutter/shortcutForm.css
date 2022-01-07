@@ -1,0 +1,33 @@
+#formHeader {
+	margin-top: -15px;
+	margin-left: 30px;
+	color: #3C4752;
+	font-size: var(--lumo-font-size-xxl);
+}
+
+#formComponent {
+	margin: 0 auto;
+	width: 70% !important;
+	height: 100%;
+	border-radius: 10px;
+	
+	background-color: #DAE1E7;
+	text-align: center;
+}
+
+#formLayout {
+	height: 200px;
+	margin-top: 0;
+}
+
+#shortcutTextField {
+	--lumo-text-field-size: var(--lumo-size-xl);
+	margin: 0 auto;
+	
+	/* 
+	It's super dirty but I don't know how to replaye the inside of the textarea's 
+	color since it is in a shadow root and I can't directly access it.
+	Thus I'm changing the corresponding variable to the needed color.
+	*/
+	--lumo-contrast-10pct: white !important;
+}
