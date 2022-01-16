@@ -25,9 +25,17 @@
 	margin: 0 auto;
 	
 	/* 
-	It's super dirty but I don't know how to replaye the inside of the textarea's 
+	It's super dirty but I don't know how to replace the inside of the textarea's 
 	color since it is in a shadow root and I can't directly access it.
 	Thus I'm changing the corresponding variable to the needed color.
 	*/
 	--lumo-contrast-10pct: white !important;
+}
+
+#shortcutSelector {
+	margin: 0 auto;
+}
+
+#shortcutInputField {
+	margin-right: 10px;
 }

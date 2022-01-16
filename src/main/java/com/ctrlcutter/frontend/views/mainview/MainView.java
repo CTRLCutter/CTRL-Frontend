@@ -1,5 +1,8 @@
 package com.ctrlcutter.frontend.views.mainview;
 
+import java.util.Locale;
+
+import com.ctrlcutter.frontend.util.TranslationProvider;
 import com.ctrlcutter.frontend.views.mainview.sublayouts.KeyboardContentLayout;
 import com.ctrlcutter.frontend.views.mainview.sublayouts.MainContentLayout;
 import com.ctrlcutter.frontend.views.mainview.sublayouts.TopLayout;
@@ -19,6 +22,8 @@ public class MainView extends VerticalLayout {
 
         setMargin(true);
 
+        TranslationProvider.changeApplicationLocale(Locale.ENGLISH);
+        
         HorizontalLayout topLayout = new TopLayout();
 
         add(topLayout);
