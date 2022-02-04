@@ -17,6 +17,7 @@ public class ShortcutSelector extends CustomField<Shortcut> {
 
         TextField shortcutInputField = new TextField();
         shortcutInputField.setId("shortcutInputField");
+        shortcutInputField.setPlaceholder("Enter your Shortcut");
 
         Button clearButton = new Button("Clear");
 

@@ -23,19 +23,30 @@
 #shortcutTextField {
 	--lumo-text-field-size: var(--lumo-size-xl);
 	margin: 0 auto;
-	
-	/* 
-	It's super dirty but I don't know how to replace the inside of the textarea's 
-	color since it is in a shadow root and I can't directly access it.
-	Thus I'm changing the corresponding variable to the needed color.
-	*/
-	--lumo-contrast-10pct: white !important;
+}
+
+#shortcutTextField::part(input-field) {
+	background-color: white;
 }
 
 #shortcutSelector {
-	margin: 0 auto;
+	margin: 6px auto 0 auto;
 }
 
 #shortcutInputField {
 	margin-right: 10px;
 }
+
+#shortcutInputField::part(input-field) {
+	background-color: white;
+	margin-top: -4px;
+}
+
+/*
+
+TODO Target styling...
+
+#shortcutInputField::part(input-field):hover {
+	background-color: #DAE1E7;
+}
+*/
