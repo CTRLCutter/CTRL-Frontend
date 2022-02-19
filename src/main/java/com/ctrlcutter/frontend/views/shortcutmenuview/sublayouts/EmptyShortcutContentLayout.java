@@ -4,9 +4,9 @@ import com.ctrlcutter.frontend.util.CTRLCutterConstants;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class ContentLayout extends VerticalLayout {
+public class EmptyShortcutContentLayout extends VerticalLayout {
 
-    public ContentLayout() {
+    public EmptyShortcutContentLayout() {
         
         setId("shortcutContentLayout");
 

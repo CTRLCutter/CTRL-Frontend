@@ -72,3 +72,21 @@ body {
 	width: 90px;
 	height: 90px;
 }
+
+#contentLayout {
+	overflow-y: auto;
+}
+
+.shortcutItem {
+	max-width: 250px;
+	min-width: 250px;
+	display: inline;
+	margin: 5px auto;
+	padding: 10px;
+	height: 64px;
+	background-color: #DAE1E7;
+	border: 5px solid #3C4752;
+	border-radius: 5px;
+	
+	text-align: center;
+}
