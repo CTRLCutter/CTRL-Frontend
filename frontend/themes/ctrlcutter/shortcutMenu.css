@@ -90,3 +90,7 @@ body {
 	
 	text-align: center;
 }
+
+.shortcutItem:hover {
+	background-color: #B8C2CC;
+}

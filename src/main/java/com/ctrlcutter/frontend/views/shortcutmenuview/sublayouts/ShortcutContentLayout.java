@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ctrlcutter.frontend.entities.shortcut.Shortcut;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class ShortcutContentLayout extends VerticalLayout {
@@ -13,7 +14,11 @@ public class ShortcutContentLayout extends VerticalLayout {
         setHeightFull();
         setId("contentLayout");
 
+        H2 header = new H2(getTranslation("my_shortcuts_header"));
+        add(header);
+
         for (Shortcut shortcut : shortcuts) {
+
             Div shortcutDiv = new Div();
             shortcutDiv.setClassName("shortcutItem");
 
@@ -21,5 +26,4 @@ public class ShortcutContentLayout extends VerticalLayout {
             add(shortcutDiv);
         }
     }
-
 }
