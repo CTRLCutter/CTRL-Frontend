@@ -1,5 +1,6 @@
 package com.ctrlcutter.frontend.views.mainview.sublayouts;
 
+import com.ctrlcutter.frontend.views.registrationview.RegistrationView;
 import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -33,7 +34,7 @@ public class MainContentLayout extends VerticalLayout {
 
         Button greenSignupButton = new Button(getTranslation("signup_text"));
         greenSignupButton.addClickListener(e -> {
-            Notification.show("Another signup stub");
+            UI.getCurrent().navigate(RegistrationView.class);
         });
 
         greenSignupButton.setClassName("signupButton");

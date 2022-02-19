@@ -1,9 +1,9 @@
 package com.ctrlcutter.frontend.views.mainview.sublayouts;
 
 import com.ctrlcutter.frontend.views.loginview.LoginView;
+import com.ctrlcutter.frontend.views.registrationview.RegistrationView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 public class ButtonLayout extends HorizontalLayout {
@@ -23,7 +23,7 @@ public class ButtonLayout extends HorizontalLayout {
         signupButton.setId("basicSignupButton");
 
         signupButton.addClickListener(e -> {
-            Notification.show("Signup Stub");
+            UI.getCurrent().navigate(RegistrationView.class);
         });
 
         add(loginButton, signupButton);

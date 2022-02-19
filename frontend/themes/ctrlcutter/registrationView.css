@@ -1,0 +1,41 @@
+#registrationView {
+	height: 100vh !important;
+}
+
+#registrationLayout {
+	margin: auto;
+	max-width: 512px;
+}
+
+.registrationFormField {
+	padding: 0 10px;
+}
+
+.registrationFormField:nth-child(odd) {
+	margin: 5px 5px 5px auto;
+}
+
+.registrationFormField:nth-child(even) {
+	margin: 5px auto 5px 5px;
+}
+
+.registrationFormRow {
+	width: 100%;
+}
+
+#registrationSubmitButton {
+	margin: 20px auto;
+	background-color: #0A7AFF;
+	color: white;
+	width: 70%;
+}
+
+#registrationSubmitButton:hover {
+	background-color: #0863CC;
+}
+
+#registrationHeader {
+	/* Don't ask me why this works... CSS is a mystery. */
+	/* It just responsively lines up perfectly with the registrationFormFields */
+	margin: 0 68% 0.5em auto;
+}
