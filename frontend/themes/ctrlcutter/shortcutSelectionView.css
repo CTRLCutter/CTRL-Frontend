@@ -1,0 +1,17 @@
+body {
+	overflow-y: hidden !important;
+	overflow-x: hidden !important;
+}
+
+#menuView {
+	width: 100% !important;
+	height: 100vh !important;
+}
+
+.shortcutType {
+	width: 100px;
+	height: 100px;
+	background-color: white;
+	border: 2px solid blue;
+	border-radius: 10px;
+}

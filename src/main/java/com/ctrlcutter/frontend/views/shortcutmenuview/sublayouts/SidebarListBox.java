@@ -3,7 +3,9 @@ package com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ctrlcutter.frontend.views.registrationview.RegistrationView;
 import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuSidebarOptions;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -45,6 +47,10 @@ public class SidebarListBox extends ListBox<ShortcutMenuSidebarOptions> {
 
         Span name = new Span(getTranslation(option.getTranslationKey()));
         name.setClassName("listRowItemSpan");
+        
+        name.addClickListener(e -> {
+            UI.getCurrent().navigate(option.getRedirectionViewClass());
+        });
 
         VerticalLayout column = new VerticalLayout(name);
         column.setClassName("spanColumn");
