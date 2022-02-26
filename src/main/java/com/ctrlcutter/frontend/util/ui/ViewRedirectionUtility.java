@@ -1,4 +1,4 @@
-package com.ctrlcutter.frontend.util;
+package com.ctrlcutter.frontend.util.ui;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;

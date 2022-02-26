@@ -1,7 +1,7 @@
 package com.ctrlcutter.frontend.views.shortcutcreationform.sublayouts;
 
-import com.ctrlcutter.frontend.util.CTRLCutterConstants;
-import com.ctrlcutter.frontend.util.HorizontalDummyComponent;
+import com.ctrlcutter.frontend.util.constants.CTRLCutterConstants;
+import com.ctrlcutter.frontend.util.ui.HorizontalDummyComponent;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 

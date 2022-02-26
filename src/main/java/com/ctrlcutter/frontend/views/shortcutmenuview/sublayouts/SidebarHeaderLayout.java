@@ -1,6 +1,6 @@
 package com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts;
 
-import com.ctrlcutter.frontend.util.CTRLCutterConstants;
+import com.ctrlcutter.frontend.util.constants.CTRLCutterConstants;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 

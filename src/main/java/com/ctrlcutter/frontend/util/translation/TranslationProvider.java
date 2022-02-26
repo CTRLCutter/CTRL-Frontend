@@ -1,4 +1,4 @@
-package com.ctrlcutter.frontend.util;
+package com.ctrlcutter.frontend.util.translation;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;

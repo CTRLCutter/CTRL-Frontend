@@ -1,4 +1,4 @@
-package com.ctrlcutter.frontend.util;
+package com.ctrlcutter.frontend.util.rest;
 
 import java.util.List;
 

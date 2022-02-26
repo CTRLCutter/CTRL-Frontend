@@ -13,8 +13,8 @@ import com.ctrlcutter.frontend.entities.shortcut.BasicKey;
 import com.ctrlcutter.frontend.entities.shortcut.ModifierKey;
 import com.ctrlcutter.frontend.entities.shortcut.ModifierKeys;
 import com.ctrlcutter.frontend.entities.shortcut.Shortcut;
-import com.ctrlcutter.frontend.util.OSUtility;
-import com.ctrlcutter.frontend.util.ShortcutMapper;
+import com.ctrlcutter.frontend.util.rest.OSUtility;
+import com.ctrlcutter.frontend.util.rest.ShortcutMapper;
 
 public class ShortcutMappingTest {
 

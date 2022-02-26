@@ -6,7 +6,7 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.ctrlcutter.frontend.util.TranslationProvider;
+import com.ctrlcutter.frontend.util.translation.TranslationProvider;
 
 public class TranslationProviderTest {
 

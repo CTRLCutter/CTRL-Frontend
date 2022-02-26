@@ -3,7 +3,7 @@ package com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ctrlcutter.frontend.util.ViewRedirectionUtility;
+import com.ctrlcutter.frontend.util.ui.ViewRedirectionUtility;
 import com.ctrlcutter.frontend.views.registrationview.RegistrationView;
 import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuSidebarOptions;
 import com.vaadin.flow.component.UI;

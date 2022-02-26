@@ -1,6 +1,6 @@
 package com.ctrlcutter.frontend.views.mainview.sublayouts;
 
-import com.ctrlcutter.frontend.util.ViewRedirectionUtility;
+import com.ctrlcutter.frontend.util.ui.ViewRedirectionUtility;
 import com.ctrlcutter.frontend.views.registrationview.RegistrationView;
 import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuView;
 import com.vaadin.flow.component.UI;

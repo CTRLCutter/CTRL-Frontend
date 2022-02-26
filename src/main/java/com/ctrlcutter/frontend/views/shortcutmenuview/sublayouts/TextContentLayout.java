@@ -1,6 +1,6 @@
 package com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts;
 
-import com.ctrlcutter.frontend.util.ViewRedirectionUtility;
+import com.ctrlcutter.frontend.util.ui.ViewRedirectionUtility;
 import com.ctrlcutter.frontend.views.shortcutcreationform.ShortcutCreationForm;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;

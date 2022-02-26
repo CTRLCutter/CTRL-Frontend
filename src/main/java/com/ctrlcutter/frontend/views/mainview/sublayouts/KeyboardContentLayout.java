@@ -1,7 +1,7 @@
 package com.ctrlcutter.frontend.views.mainview.sublayouts;
 
-import com.ctrlcutter.frontend.util.CTRLCutterConstants;
-import com.ctrlcutter.frontend.util.VerticalDummyComponent;
+import com.ctrlcutter.frontend.util.constants.CTRLCutterConstants;
+import com.ctrlcutter.frontend.util.ui.VerticalDummyComponent;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
