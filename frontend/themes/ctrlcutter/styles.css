@@ -70,6 +70,12 @@ body {
 	padding-left: 8px;
 }
 
+#tryWithoutLink:hover {
+	color: #20252B; 
+	text-decoration: underline;
+  	text-decoration-color: #20252B;
+}
+
 #dividerLine {
 	margin-top: -40px;
 	margin-bottom: 40px;
@@ -83,6 +89,12 @@ body {
 #loginButton {
 	background-color: transparent;
 	color: #3B4651;
+}
+
+#loginButton:hover {
+	color: #20252B;
+	text-decoration: underline;
+  	text-decoration-color: #20252B;
 }
 
 #basicSignupButton {
