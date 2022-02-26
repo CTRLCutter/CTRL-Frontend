@@ -3,15 +3,24 @@ body {
 	overflow-x: hidden !important;
 }
 
-#menuView {
+#selectionView {
 	width: 100% !important;
 	height: 100vh !important;
 }
 
+#itemLayout {
+	margin: auto auto;
+}
+
 .shortcutType {
-	width: 100px;
-	height: 100px;
+	padding: 25px;
+	min-width: 80px;
 	background-color: white;
-	border: 2px solid blue;
+	border: 2px solid #0A7AFF;
 	border-radius: 10px;
+	text-align: center;
+}
+
+.shortcutLabel {
+	vertical-align: middle;
 }
