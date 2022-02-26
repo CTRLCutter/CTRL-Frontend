@@ -34,7 +34,7 @@ public class ShortcutSelector extends CustomField<Shortcut> {
     }
 
     @Override
-    protected Shortcut generateModelValue() {
+    public Shortcut generateModelValue() {
         return this.keyDownListener.getCurrentShortcut();
     }
 

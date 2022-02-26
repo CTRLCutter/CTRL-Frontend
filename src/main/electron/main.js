@@ -7,7 +7,7 @@ let serverProcess;
 function createWindow() {
     let platform = process.platform;
 	
-    let appUrl = 'http://localhost:8080';
+    let appUrl = 'http://localhost:8081';
 
     const openWindow = function () {
         mainWindow = new BrowserWindow({
