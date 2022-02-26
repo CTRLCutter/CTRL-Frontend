@@ -3,6 +3,7 @@ package com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ctrlcutter.frontend.util.ViewRedirectionUtility;
 import com.ctrlcutter.frontend.views.registrationview.RegistrationView;
 import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuSidebarOptions;
 import com.vaadin.flow.component.UI;
@@ -49,7 +50,7 @@ public class SidebarListBox extends ListBox<ShortcutMenuSidebarOptions> {
         name.setClassName("listRowItemSpan");
         
         name.addClickListener(e -> {
-            UI.getCurrent().navigate(option.getRedirectionViewClass());
+            ViewRedirectionUtility.redirectToView(option.getRedirectionViewClass());
         });
 
         VerticalLayout column = new VerticalLayout(name);

@@ -1,5 +1,6 @@
 package com.ctrlcutter.frontend.views.mainview.sublayouts;
 
+import com.ctrlcutter.frontend.util.ViewRedirectionUtility;
 import com.ctrlcutter.frontend.views.loginview.LoginView;
 import com.ctrlcutter.frontend.views.registrationview.RegistrationView;
 import com.vaadin.flow.component.UI;
@@ -16,14 +17,14 @@ public class ButtonLayout extends HorizontalLayout {
         loginButton.setId("loginButton");
 
         loginButton.addClickListener(e -> {
-            UI.getCurrent().navigate(LoginView.class);
+            ViewRedirectionUtility.redirectToView(LoginView.class);
         });
 
         Button signupButton = new Button(getTranslation("signup_btn_text"));
         signupButton.setId("basicSignupButton");
 
         signupButton.addClickListener(e -> {
-            UI.getCurrent().navigate(RegistrationView.class);
+            ViewRedirectionUtility.redirectToView(RegistrationView.class);
         });
 
         add(loginButton, signupButton);

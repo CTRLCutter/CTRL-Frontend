@@ -1,12 +1,12 @@
 package com.ctrlcutter.frontend.views.mainview.sublayouts;
 
+import com.ctrlcutter.frontend.util.ViewRedirectionUtility;
 import com.ctrlcutter.frontend.views.registrationview.RegistrationView;
 import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class MainContentLayout extends VerticalLayout {
@@ -15,7 +15,7 @@ public class MainContentLayout extends VerticalLayout {
 
         H2 titleText = new H2(getTranslation("custom_macros_text_header"));
         titleText.setId("titleText");
-        
+
         Paragraph infoText1 = new Paragraph(getTranslation("custom_macros_text_1"));
         Paragraph infoText2 = new Paragraph(getTranslation("custom_macros_text_2"));
         Paragraph infoText3 = new Paragraph(getTranslation("custom_macros_text_3"));
@@ -34,7 +34,7 @@ public class MainContentLayout extends VerticalLayout {
 
         Button greenSignupButton = new Button(getTranslation("signup_text"));
         greenSignupButton.addClickListener(e -> {
-            UI.getCurrent().navigate(RegistrationView.class);
+            ViewRedirectionUtility.redirectToView(RegistrationView.class);
         });
 
         greenSignupButton.setClassName("signupButton");
@@ -48,7 +48,7 @@ public class MainContentLayout extends VerticalLayout {
         tryWithoutLink.setId("tryWithoutLink");
 
         tryWithoutLink.addClickListener(e -> {
-            UI.getCurrent().navigate(ShortcutMenuView.class);
+            ViewRedirectionUtility.redirectToView(ShortcutMenuView.class);
         });
 
         return tryWithoutLink;
