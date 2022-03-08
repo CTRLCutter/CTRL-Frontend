@@ -1,4 +1,4 @@
-package com.ctrlcutter.frontend.views.shortcutcreationform.sublayouts;
+package com.ctrlcutter.frontend.views.shortcutcreationform.textform;
 
 import java.util.Objects;
 
@@ -14,12 +14,12 @@ import com.ctrlcutter.frontend.views.shortcutcreationform.components.ShortcutSel
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 
-public class FormComponent extends VerticalLayout {
+public class TextShortcutFormComponent extends VerticalLayout {
 
     private ShortcutSelector selector;
     private TextArea shortcutTextField;
     
-    public FormComponent() {
+    public TextShortcutFormComponent() {
         setId("formComponent");
 
         this.selector = new ShortcutSelector();

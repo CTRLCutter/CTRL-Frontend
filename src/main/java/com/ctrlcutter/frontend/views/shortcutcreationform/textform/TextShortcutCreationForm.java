@@ -1,6 +1,5 @@
-package com.ctrlcutter.frontend.views.shortcutcreationform;
+package com.ctrlcutter.frontend.views.shortcutcreationform.textform;
 
-import com.ctrlcutter.frontend.views.shortcutcreationform.sublayouts.FormComponent;
 import com.ctrlcutter.frontend.views.shortcutcreationform.sublayouts.HeaderLayout;
 import com.ctrlcutter.frontend.views.shortcutcreationform.sublayouts.TopLayout;
 import com.vaadin.flow.component.button.Button;
@@ -14,9 +13,9 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Shortcut Creation")
 @Route(value = "shortcut-creation")
 @CssImport("./themes/ctrlcutter/shortcutForm.css")
-public class ShortcutCreationForm extends VerticalLayout {
+public class TextShortcutCreationForm extends VerticalLayout {
 
-    public ShortcutCreationForm() {
+    public TextShortcutCreationForm() {
 
         Hr horizontalLine = new Hr();
         horizontalLine.setId("dividerLine");
@@ -29,7 +28,7 @@ public class ShortcutCreationForm extends VerticalLayout {
         formLayout.setId("formLayout");
         formLayout.setWidthFull();
 
-        FormComponent formComponent = new FormComponent();
+        TextShortcutFormComponent formComponent = new TextShortcutFormComponent();
 
         formLayout.add(formComponent);
         
