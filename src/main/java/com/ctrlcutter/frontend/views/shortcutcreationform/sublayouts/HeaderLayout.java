@@ -5,10 +5,11 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 public class HeaderLayout extends HorizontalLayout {
 
-    public HeaderLayout() {
+    public HeaderLayout(final String headerTitle) {
+
         setWidthFull();
 
-        H1 header = new H1("Text Shortcut");
+        H1 header = new H1(headerTitle);
         header.setId("formHeader");
 
         add(header);

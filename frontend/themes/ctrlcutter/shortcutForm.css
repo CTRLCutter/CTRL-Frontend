@@ -42,6 +42,10 @@
 	margin-top: -4px;
 }
 
+#fileSelector {
+	margin: 25px auto 10px auto;
+}
+
 /*
 
 TODO Target styling...

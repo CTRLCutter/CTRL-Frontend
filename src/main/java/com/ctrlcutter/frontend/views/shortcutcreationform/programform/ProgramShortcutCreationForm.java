@@ -1,8 +1,7 @@
-package com.ctrlcutter.frontend.views.shortcutcreationform.textform;
+package com.ctrlcutter.frontend.views.shortcutcreationform.programform;
 
 import com.ctrlcutter.frontend.views.shortcutcreationform.sublayouts.HeaderLayout;
 import com.ctrlcutter.frontend.views.shortcutcreationform.sublayouts.TopLayout;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -10,32 +9,29 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@PageTitle("Text Shortcut Creation")
-@Route(value = "text_shortcut_creation")
+@PageTitle("Program Shortcut Creation")
+@Route(value = "program_shortcut_creation")
 @CssImport("./themes/ctrlcutter/shortcutForm.css")
-public class TextShortcutCreationForm extends VerticalLayout {
+public class ProgramShortcutCreationForm extends VerticalLayout {
 
-    public TextShortcutCreationForm() {
+    public ProgramShortcutCreationForm() {
 
         Hr horizontalLine = new Hr();
         horizontalLine.setId("dividerLine");
 
         HorizontalLayout topLayout = new TopLayout();
 
-        HorizontalLayout headerLayout = new HeaderLayout("Text Shortcut");
+        HorizontalLayout headerLayout = new HeaderLayout("Program Shortcut");
 
         HorizontalLayout formLayout = new HorizontalLayout();
         formLayout.setId("formLayout");
         formLayout.setWidthFull();
 
-        TextShortcutFormComponent formComponent = new TextShortcutFormComponent();
+        ProgramShortcutFormComponent formComponent = new ProgramShortcutFormComponent();
 
         formLayout.add(formComponent);
-        
-        Button testButton = new Button("Request");
-        testButton.addClickListener(e -> {formComponent.requestShortcut();});
 
-        add(topLayout, horizontalLine, headerLayout, formLayout, testButton);
+        add(topLayout, horizontalLine, headerLayout, formLayout);
 
         setWidthFull();
         setHeightFull();
