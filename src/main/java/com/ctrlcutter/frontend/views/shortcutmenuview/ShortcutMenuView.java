@@ -23,7 +23,9 @@ public class ShortcutMenuView extends HorizontalLayout {
 
         setId("menuView");
 
-        add(new SidebarLayout());
+        SidebarLayout sidebarLayout = new SidebarLayout(ShortcutMenuSidebarOptions.SHORTCUTS);
+        
+        add(sidebarLayout);
 
         IShortcutProvider shortcutProvider = new MockShortcutProvider();
         List<Shortcut> existingShortcuts = shortcutProvider.provideUserShortcuts();

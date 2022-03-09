@@ -9,7 +9,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class SidebarLayout extends VerticalLayout {
 
-    public SidebarLayout() {
+    public SidebarLayout(ShortcutMenuSidebarOptions... excludedMenuSidebarOptions) {
 
         setId("sidebarLayout");
 
@@ -17,7 +17,7 @@ public class SidebarLayout extends VerticalLayout {
 
         ListBox<ShortcutMenuSidebarOptions> listBox = new SidebarListBox();
 
-        List<ShortcutMenuSidebarOptions> options = ShortcutMenuSidebarOptions.getAllOptions();
+        List<ShortcutMenuSidebarOptions> options = ShortcutMenuSidebarOptions.getAllOtherOptions(excludedMenuSidebarOptions);
 
         listBox.setItems(options);
 
