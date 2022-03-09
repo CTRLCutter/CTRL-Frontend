@@ -3,6 +3,8 @@ package com.ctrlcutter.frontend.views.shortcutselectionview;
 import java.util.List;
 
 import com.ctrlcutter.frontend.util.ui.ViewRedirectionUtility;
+import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuSidebarOptions;
+import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.SidebarLayout;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
@@ -15,16 +17,19 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Shortcut Selection")
 @Route(value = "shortcut_selection")
 @CssImport("./themes/ctrlcutter/shortcutSelectionView.css")
-public class ShortcutSelectionView extends VerticalLayout {
+public class ShortcutSelectionView extends HorizontalLayout {
 
     public ShortcutSelectionView() {
 
         setId("selectionView");
 
+        SidebarLayout sidebarLayout = new SidebarLayout(ShortcutMenuSidebarOptions.CREATE);
+        VerticalLayout selectionView = new VerticalLayout();
+
         List<ShortcutSelectionTypes> shortcutTypes = ShortcutSelectionTypes.getAllTypes();
         HorizontalLayout itemLayout = new HorizontalLayout();
         itemLayout.setId("itemLayout");
-        
+
         H1 selectionViewHeader = new H1(getTranslation("shortcut_selection_header"));
         selectionViewHeader.setId("selectionViewHeader");
         selectionViewHeader.setWidthFull();
@@ -44,7 +49,9 @@ public class ShortcutSelectionView extends VerticalLayout {
             itemLayout.add(shortcutDiv);
         }
 
-        add(selectionViewHeader, itemLayout);
+        selectionView.add(selectionViewHeader, itemLayout);
+
+        add(sidebarLayout, selectionView);
     }
 
 }
