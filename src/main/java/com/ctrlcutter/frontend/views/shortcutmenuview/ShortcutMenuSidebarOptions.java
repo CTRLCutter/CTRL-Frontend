@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.ctrlcutter.frontend.views.settingsview.SettingsView;
 import com.ctrlcutter.frontend.views.shortcutselectionview.ShortcutSelectionView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Image;
@@ -12,7 +13,7 @@ public enum ShortcutMenuSidebarOptions {
 
     SHORTCUTS(new Image("icons/keyboardIcon.png", "shortcut icon"), "sidebar_shortcuts", ShortcutMenuView.class),
     CREATE(new Image("icons/createIcon.png", "create icon"), "sidebar_create", ShortcutSelectionView.class),
-    SETTINGS(new Image("icons/settingsIcon.png", "settings icon"), "sidebar_settings", ShortcutSelectionView.class);
+    SETTINGS(new Image("icons/settingsIcon.png", "settings icon"), "sidebar_settings", SettingsView.class);
 
     private Image optionIcon;
     private String translationKey;

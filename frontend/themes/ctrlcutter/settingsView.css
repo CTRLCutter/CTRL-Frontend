@@ -1,0 +1,9 @@
+#settingsView {
+	width: 100% !important;
+	height: 100vh !important;
+}
+
+#settingsHeader {
+	width: 100%;
+	text-align: center;
+}
