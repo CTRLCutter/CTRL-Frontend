@@ -8,9 +8,12 @@ import com.ctrlcutter.frontend.entities.form.IFormShortcutEntity;
 import com.ctrlcutter.frontend.entities.form.TextShortcutFormEntity;
 import com.ctrlcutter.frontend.entities.rest.BasicScriptDTO;
 import com.ctrlcutter.frontend.entities.shortcut.Shortcut;
+import com.ctrlcutter.frontend.util.constants.CTRLCutterConstants;
 import com.ctrlcutter.frontend.util.rest.RestRequestHelper;
 import com.ctrlcutter.frontend.util.rest.ShortcutMapper;
 import com.ctrlcutter.frontend.views.shortcutcreationform.components.ShortcutSelector;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 
@@ -18,7 +21,7 @@ public class TextShortcutFormComponent extends VerticalLayout {
 
     private ShortcutSelector selector;
     private TextArea shortcutTextField;
-    
+
     public TextShortcutFormComponent() {
         setId("formComponent");
 
@@ -28,21 +31,31 @@ public class TextShortcutFormComponent extends VerticalLayout {
         this.shortcutTextField = new TextArea();
         shortcutTextField.setLabel("Text");
         shortcutTextField.setId("shortcutTextField");
-        
-        add(shortcutTextField, selector);
+
+        Image confirmButtonIcon = new Image(CTRLCutterConstants.CONFIRM_BUTTON_ICON_FILEPATH, "confirm_icon");
+        confirmButtonIcon.setId("confirmButtonIcon");
+
+        Button confirmButton = new Button(confirmButtonIcon);
+        confirmButton.setId("textFormConfirmButton");
+        confirmButton.addClassName("formConfirmButton");
+
+        confirmButton.addClickListener(e -> {
+            requestShortcut();
+        });
+
+        add(shortcutTextField, selector, confirmButton);
     }
-    
-    
-    public void requestShortcut() {
+
+    private void requestShortcut() {
         Shortcut selectedShortcut = Objects.requireNonNull(this.selector.generateModelValue());
         String userInputText = Objects.requireNonNull(this.shortcutTextField.getValue());
-        
+
         if (!userInputText.equals("")) {
             IFormShortcutEntity shortcutEntity = new TextShortcutFormEntity(selectedShortcut, userInputText);
             BasicScriptDTO scriptDTO = ShortcutMapper.mapShortcutToDTO(shortcutEntity);
-            
+
             ResponseEntity<String> response = RestRequestHelper.makeShortcutRESTRequest(scriptDTO);
-            
+
             System.out.println(response.getBody());
         }
     }

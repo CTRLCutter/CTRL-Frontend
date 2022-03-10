@@ -1,6 +1,9 @@
 package com.ctrlcutter.frontend.views.shortcutcreationform.programform;
 
+import com.ctrlcutter.frontend.util.constants.CTRLCutterConstants;
 import com.ctrlcutter.frontend.views.shortcutcreationform.components.ShortcutSelector;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -9,13 +12,11 @@ import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 
 public class ProgramShortcutFormComponent extends VerticalLayout {
 
-    private ShortcutSelector selector;
-
     public ProgramShortcutFormComponent() {
 
         setId("formComponent");
 
-        this.selector = new ShortcutSelector();
+        ShortcutSelector selector = new ShortcutSelector();
         selector.setId("shortcutSelector");
 
         MemoryBuffer buffer = new MemoryBuffer();
@@ -34,7 +35,18 @@ public class ProgramShortcutFormComponent extends VerticalLayout {
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
         });
 
-        add(fileSelector, selector);
+        Image confirmButtonIcon = new Image(CTRLCutterConstants.CONFIRM_BUTTON_ICON_FILEPATH, "confirm_icon");
+        confirmButtonIcon.setId("confirmButtonIcon");
+
+        Button confirmButton = new Button(confirmButtonIcon);
+        confirmButton.addClassName("formConfirmButton");
+        confirmButton.setId("programFormConfirmButton");
+
+        confirmButton.addClickListener(e -> {
+            Notification.show("Button stub");
+        });
+
+        add(fileSelector, selector, confirmButton);
     }
 
 }

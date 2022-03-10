@@ -46,6 +46,32 @@
 	margin: 25px auto 10px auto;
 }
 
+#confirmButtonIcon {
+	width: 30px;
+	height: 30px;
+	padding: 21px 19px 19px 21px;
+}
+
+.formConfirmButton {
+	background-color: #0A7AFF;
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	margin-left: 97%;
+}
+
+.formConfirmButton:hover {
+	background-color: #0863CC;
+}
+
+#textFormConfirmButton {
+	margin-top: -20px;
+}
+
+#programFormConfirmButton {
+	margin-top: 30px;
+}
+
 /*
 
 TODO Target styling...
