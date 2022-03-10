@@ -5,7 +5,6 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.upload.Upload;
-import com.vaadin.flow.component.upload.UploadI18N;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 
 public class ProgramShortcutFormComponent extends VerticalLayout {
@@ -20,9 +19,7 @@ public class ProgramShortcutFormComponent extends VerticalLayout {
         selector.setId("shortcutSelector");
 
         MemoryBuffer buffer = new MemoryBuffer();
-        
-        // TODO Change fileSelector button text...
-        
+
         Upload fileSelector = new Upload(buffer);
         fileSelector.setId("fileSelector");
         fileSelector.setDropAllowed(false);
