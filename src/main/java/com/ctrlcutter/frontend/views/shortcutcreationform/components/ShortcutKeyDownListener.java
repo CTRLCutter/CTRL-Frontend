@@ -25,7 +25,7 @@ public class ShortcutKeyDownListener implements ComponentEventListener<KeyDownEv
     private TextField updatedTextField;
 
     private boolean shortcutResetValue = false;
-    private char currentKey;
+    private Key currentKey;
 
     public ShortcutKeyDownListener(TextField updatedTextField) {
         this.updatedTextField = updatedTextField;
@@ -46,7 +46,7 @@ public class ShortcutKeyDownListener implements ComponentEventListener<KeyDownEv
 
         } else {
 
-            currentKey = eventKey.getKeys().get(0).toCharArray()[0];
+            currentKey = eventKey;
             shortcutResetValue = true;
         }
 
@@ -92,7 +92,7 @@ public class ShortcutKeyDownListener implements ComponentEventListener<KeyDownEv
 
     protected void clearValues() {
 
-        this.currentKey = Character.MIN_VALUE;
+        this.currentKey = null;
         this.modifierKeyValues = new HashSet<>();
         this.modifierKeys = new HashSet<>();
         this.shortcutResetValue = false;
