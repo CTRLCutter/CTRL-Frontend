@@ -64,6 +64,16 @@
 	background-color: #0863CC;
 }
 
+#predefinedShortcutSelector {
+	margin: var(--lumo-space-m) auto;
+	background-color: white;
+	--lumo-contrast-10pct: white !important;
+}
+
+#predefinedShortcutSelector::part(value) {
+	background-color: white;
+}
+
 #textFormConfirmButton {
 	margin-top: -20px;
 }
