@@ -9,6 +9,10 @@ public class ViewRedirectionUtility {
         UI.getCurrent().navigate(viewClass);
     }
 
+    /*public static <C, T> void redirectToView(Class<? extends C> viewClass, T parameter) {
+        UI.getCurrent().navigate(ShortcutOverviewView.class, parameter);
+    }*/
+
     public static void redirectToLastView() {
         UI.getCurrent().getPage().getHistory().back();
     }
