@@ -7,3 +7,15 @@ body {
 	width: 100% !important;
 	height: 100vh !important;
 }
+
+.centeredText {
+	text-align: center;
+}
+
+.overviewButton {
+	margin: 0 auto;
+}
+
+#deleteButton {
+	color: #FF3B30;
+}
