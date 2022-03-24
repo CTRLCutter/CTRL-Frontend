@@ -68,13 +68,22 @@ body {
 }
 
 #headerLogo {
-	margin: 68px 0 0 8px;
+	margin-left: 8px;
 	width: 70px;
 	height: 70px;
 }
 
+#ctrlcutterButton {
+	height: fit-content;
+	margin-top: 20px;
+}
+
+#userButton {
+	height: fit-content;
+	margin-top: 25px;
+}
+
 #userIcon {
-	margin-top: 60px;
 	width: 50px;
 	height: 50px;
 }

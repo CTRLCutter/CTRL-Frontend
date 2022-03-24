@@ -19,11 +19,13 @@ public class SidebarHeaderLayout extends HorizontalLayout {
         userIcon.setId("userIcon");
 
         Button ctrlcutterButton = new Button(ctrlcutterIcon);
+        ctrlcutterButton.setId("ctrlcutterButton");
         ctrlcutterButton.addClickListener(e -> {
             ViewRedirectionUtility.redirectToView(MainView.class);
         });
 
         Button userButton = new Button(userIcon);
+        userButton.setId("userButton");
         userButton.addClickListener(e -> {
             ViewRedirectionUtility.redirectToView(UserView.class);
         });
