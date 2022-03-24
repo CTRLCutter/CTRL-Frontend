@@ -1,0 +1,13 @@
+body {
+	overflow-y: hidden !important;
+	overflow-x: hidden !important;
+}
+
+#userView {
+	width: 100% !important;
+	height: 100vh !important;
+}
+
+.centeredText {
+	text-align: center;
+}
