@@ -22,6 +22,10 @@ public class RegistrationConfirmPasswordField extends PasswordField {
         setValueChangeMode(ValueChangeMode.EAGER);
     }
 
+    protected boolean isConfirmedPasswordEqual() {
+        return confirmCheckIcon.isVisible();
+    }
+
     protected void updateConfirmField(String passwordFieldValue) {
         String originalPassword = passwordFieldValue;
         String confirmedPassword = getValue();
