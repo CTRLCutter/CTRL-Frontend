@@ -1,8 +1,8 @@
 package com.ctrlcutter.frontend.views.registrationview;
 
 import com.ctrlcutter.frontend.dtos.RegistrationUserDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ctrlcutter.frontend.util.rest.RestRequestHelper;
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H2;
@@ -42,41 +42,47 @@ public class RegistrationView extends HorizontalLayout {
     }
 
     private Button generateSubmitButton() {
-
         Button submitButton = new Button(getTranslation("registration_form_submit_btn"));
         submitButton.setId("registrationSubmitButton");
-
-        submitButton.addClickListener(e -> {
-            submitRegistration();
-        });
+        submitButton.addClickListener(this::submitRegistration);
 
         return submitButton;
     }
 
-    private void submitRegistration() {
-
+    private void submitRegistration(ClickEvent<Button> event) {
         String userNameValue = this.usernameField.getValue();
         String emailValue = this.emailField.getValue();
         String passwordValue = this.passwordField.getValue();
 
-        if (!confirmPasswordField.isConfirmedPasswordEqual()) {
-            Notification.show("Values from both password fields are not equal.");
+        if (isValidRegistration()) {
+            
+            Button sourceButton = event.getSource();
+            sourceButton.setEnabled(false);
+            
+            RegistrationUserDTO registeredUser = new RegistrationUserDTO(userNameValue, emailValue, passwordValue);
+            System.out.println(RestRequestHelper.registerUser(registeredUser));
             return;
-        }
-
-        RegistrationUserDTO registeredUser = new RegistrationUserDTO(userNameValue, emailValue, passwordValue);
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            String userJson = mapper.writeValueAsString(registeredUser);
-            System.out.println(userJson);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
         }
     }
 
-    private HorizontalLayout generateUserInfoRow() {
+    private boolean isValidRegistration() {
+        boolean validPassword = this.passwordField.isPasswordStrongEnough();
+        boolean passwordFieldsEqual = this.confirmPasswordField.isConfirmedPasswordEqual();
+        boolean usernameFieldValid = !this.usernameField.isInvalid();
+        boolean emailFieldValid = !this.emailField.isInvalid();
 
+        if (validPassword && passwordFieldsEqual && usernameFieldValid && emailFieldValid) {
+            return true;
+        }
+
+        if (!passwordFieldsEqual) {
+            Notification.show("Values from both password fields are not equal.");
+        }
+
+        return false;
+    }
+
+    private HorizontalLayout generateUserInfoRow() {
         HorizontalLayout userInfoRow = new HorizontalLayout();
         userInfoRow.setClassName("registrationFormRow");
 
@@ -93,7 +99,6 @@ public class RegistrationView extends HorizontalLayout {
     }
 
     private HorizontalLayout generatePasswordRow() {
-
         HorizontalLayout passwordRow = new HorizontalLayout();
         passwordRow.setClassName("registrationFormRow");
 

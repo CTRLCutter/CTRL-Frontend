@@ -25,6 +25,5 @@ public class EmailTextField extends TextField {
         addValueChangeListener(e -> {
             emailCheckIcon.setVisible(!isInvalid());
         });
-
     }
 }

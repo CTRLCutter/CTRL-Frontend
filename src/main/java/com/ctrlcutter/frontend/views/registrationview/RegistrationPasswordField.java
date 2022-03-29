@@ -12,6 +12,7 @@ public class RegistrationPasswordField extends PasswordField {
 
     private Icon checkIcon;
     private Span passwordStrengthText;
+    private PasswordStrength passwordStrength;
 
     public RegistrationPasswordField() {
         setLabel(getTranslation("registration_form_password"));
@@ -28,16 +29,20 @@ public class RegistrationPasswordField extends PasswordField {
         setSuffixComponent(checkIcon);
 
         setValueChangeMode(ValueChangeMode.EAGER);
-        addValueChangeListener(e -> {
-            String password = e.getValue();
-            updateHelper(password);
-        });
+        addValueChangeListener(this::updateHelper);
     }
 
-    private void updateHelper(String password) {
+    public boolean isPasswordStrongEnough() {
+        PasswordPolicyComparator comparator = new PasswordPolicyComparator();
+        PasswordPolicy currentPolicy = this.passwordStrength.getPasswordPolicy();
 
-        PasswordStrength passStrength = new PasswordStrength(password);
-        PasswordPolicy policy = passStrength.getPasswordPolicy();
+        return (comparator.compare(currentPolicy, PasswordPolicy.MODERATE) >= 0);
+    }
+
+    private void updateHelper(ComponentValueChangeEvent<PasswordField, String> event) {
+
+        this.passwordStrength = new PasswordStrength(event.getValue());
+        PasswordPolicy policy = this.passwordStrength.getPasswordPolicy();
 
         passwordStrengthText.setText(getTranslation(policy.getTranslationkey()));
         passwordStrengthText.getStyle().set("color", policy.getTextColor());
