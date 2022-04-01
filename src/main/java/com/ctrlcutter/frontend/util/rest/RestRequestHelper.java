@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 
 import com.ctrlcutter.frontend.dtos.LoginUserDTO;
 import com.ctrlcutter.frontend.dtos.RegistrationUserDTO;
+import com.ctrlcutter.frontend.dtos.SessionDTO;
+import com.ctrlcutter.frontend.dtos.SessionUserDTO;
 import com.ctrlcutter.frontend.entities.rest.BasicScriptDTO;
 import com.ctrlcutter.frontend.util.rest.exception.APIRequestException;
 import com.ctrlcutter.frontend.util.rest.exception.JsonMappingException;
@@ -30,14 +32,35 @@ public class RestRequestHelper {
     private static final String API_USERNAME = "ctrlcutter";
     private static final String API_PASSWORD = "test123password456sick789";
 
-    public static String registerUser(RegistrationUserDTO user) {
+    public static SessionDTO registerUser(RegistrationUserDTO user) {
         HttpResponse<String> response = executeModificationRequestWithEntity(BASE_URL + "customer/signup/", user);
-        return response.body();
+        SessionDTO session = mapToSessionDTO(response.body());
+        return session;
     }
 
-    public static String loginUser(LoginUserDTO user) {
+    public static SessionDTO loginUser(LoginUserDTO user) {
         HttpResponse<String> response = executeModificationRequestWithEntity(BASE_URL + "customer/login/", user);
-        return response.body();
+        SessionDTO session = mapToSessionDTO(response.body());
+        return session;
+    }
+
+    public static SessionUserDTO retrieveUserInformation(String sessionKey) {
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest req = HttpRequest.newBuilder(URI.create(BASE_URL + "customer/customerData")).header("content-type", APPLICATION_TYPE)
+                .header("sessionkey", sessionKey).header("Authorization", generateBasicAuthHeaderValue()).GET().build();
+
+        try {
+            HttpResponse<String> response = client.send(req, BodyHandlers.ofString());
+            String responseBody = response.body();
+
+            ObjectMapper mapper = new ObjectMapper();
+            SessionUserDTO userInfo = mapper.readValue(responseBody, SessionUserDTO.class);
+
+            return userInfo;
+        } catch (IOException | InterruptedException e) {
+            throw new APIRequestException("Request execution of client during REST-API call failed.", e);
+        }
     }
 
     public static ResponseEntity<String> makeShortcutRESTRequest(BasicScriptDTO scriptDTO) {
@@ -65,6 +88,16 @@ public class RestRequestHelper {
         }
     }
 
+    private static SessionDTO mapToSessionDTO(String sessionJson) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            SessionDTO session = mapper.readValue(sessionJson, SessionDTO.class);
+            return session;
+        } catch (JsonProcessingException e) {
+            throw new JsonMappingException("Error while JSON-Mapping during a REST-Request.", e);
+        }
+    }
+
     private static String mapObjectToJson(Object o) {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -79,17 +112,26 @@ public class RestRequestHelper {
         String objectJson = mapObjectToJson(requestObject);
 
         HttpClient client = HttpClient.newHttpClient();
-        Encoder base64Encoder = Base64.getEncoder();
-        String unencodedAuthentication = API_USERNAME + ":" + API_PASSWORD;
 
         HttpRequest req = HttpRequest.newBuilder(URI.create(uri)).header("content-type", APPLICATION_TYPE)
-                .header("Authorization", "Basic " + new String(base64Encoder.encode(unencodedAuthentication.getBytes())))
-                .POST(HttpRequest.BodyPublishers.ofString(objectJson)).build();
+                .header("Authorization", generateBasicAuthHeaderValue()).POST(HttpRequest.BodyPublishers.ofString(objectJson)).build();
 
         try {
             return client.send(req, BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
             throw new APIRequestException("Request execution of client during REST-API call failed.", e);
         }
+    }
+
+    private static String generateBasicAuthHeaderValue() {
+        Encoder base64Encoder = Base64.getEncoder();
+        String unencodedAuthentication = API_USERNAME + ":" + API_PASSWORD;
+        byte[] unencodedAuthenticationBytes = unencodedAuthentication.getBytes();
+        byte[] encodedAuthenticationBytes = base64Encoder.encode(unencodedAuthenticationBytes);
+
+        String headerBase = "Basic ";
+        String headerValue = new String(encodedAuthenticationBytes);
+
+        return headerBase + headerValue;
     }
 }

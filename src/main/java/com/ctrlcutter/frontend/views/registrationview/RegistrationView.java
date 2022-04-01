@@ -1,8 +1,12 @@
 package com.ctrlcutter.frontend.views.registrationview;
 
 import com.ctrlcutter.frontend.dtos.RegistrationUserDTO;
+import com.ctrlcutter.frontend.dtos.SessionDTO;
 import com.ctrlcutter.frontend.util.rest.RestRequestHelper;
+import com.ctrlcutter.frontend.util.ui.ViewRedirectionUtility;
+import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuView;
 import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H2;
@@ -12,6 +16,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 
 @PageTitle("Registration")
 @Route(value = "registration")
@@ -60,7 +65,15 @@ public class RegistrationView extends HorizontalLayout {
             sourceButton.setEnabled(false);
             
             RegistrationUserDTO registeredUser = new RegistrationUserDTO(userNameValue, emailValue, passwordValue);
-            System.out.println(RestRequestHelper.registerUser(registeredUser));
+            
+            // TODO Handle Registration Error... But can errors happen here??? Thinkk.
+            SessionDTO sessionDTO = RestRequestHelper.registerUser(registeredUser);
+            
+            VaadinSession session = VaadinSession.getCurrent();
+            session.setAttribute("sessionKey", sessionDTO.getSessionKey());
+            VaadinSession.setCurrent(session);
+            ViewRedirectionUtility.redirectToView(ShortcutMenuView.class);
+            
             return;
         }
     }
