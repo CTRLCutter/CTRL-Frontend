@@ -35,8 +35,6 @@ public class SidebarHeaderLayout extends HorizontalLayout {
             VaadinSession session = VaadinSession.getCurrent();
             Object sessionId = session.getAttribute("sessionKey");
 
-            System.out.println(sessionId);
-
             Class<? extends Component> redirectionViewClass = LoginView.class;
 
             if (null != sessionId) {

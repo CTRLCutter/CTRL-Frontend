@@ -2,8 +2,10 @@ package com.ctrlcutter.frontend.views.userview;
 
 import com.ctrlcutter.frontend.dtos.SessionUserDTO;
 import com.ctrlcutter.frontend.util.rest.RestRequestHelper;
+import com.ctrlcutter.frontend.util.ui.ViewRedirectionUtility;
+import com.ctrlcutter.frontend.views.mainview.MainView;
 import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.SidebarLayout;
-import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
@@ -37,7 +39,14 @@ public class UserView extends HorizontalLayout {
 
         Paragraph userInfo = new Paragraph("This is just a text stub for some user info and yeah... I just want to will this section with text.");
 
-        userInfoLayout.add(headerText, userInfo);
+        Button logoutButton = new Button("Logout");
+        logoutButton.addClickListener(e -> {
+            session.setAttribute("sessionKey", null);
+            VaadinSession.setCurrent(session);
+            ViewRedirectionUtility.redirectToView(MainView.class);
+        });
+
+        userInfoLayout.add(headerText, userInfo, logoutButton);
 
         add(sidebarLayout, userInfoLayout);
     }
