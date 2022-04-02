@@ -8,7 +8,6 @@ import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.SidebarLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
@@ -33,20 +32,18 @@ public class UserView extends HorizontalLayout {
         SidebarLayout sidebarLayout = new SidebarLayout();
 
         VerticalLayout userInfoLayout = new VerticalLayout();
-        H2 headerText = new H2("Welcome " + sessionUser.getUsername());
+        H2 headerText = new H2(getTranslation("userview_welcome", sessionUser.getUsername()));
         headerText.addClassName("centeredText");
         headerText.setWidthFull();
 
-        Paragraph userInfo = new Paragraph("This is just a text stub for some user info and yeah... I just want to will this section with text.");
-
-        Button logoutButton = new Button("Logout");
+        Button logoutButton = new Button(getTranslation("userview_logout"));
         logoutButton.addClickListener(e -> {
             session.setAttribute("sessionKey", null);
             VaadinSession.setCurrent(session);
             ViewRedirectionUtility.redirectToView(MainView.class);
         });
 
-        userInfoLayout.add(headerText, userInfo, logoutButton);
+        userInfoLayout.add(headerText, logoutButton);
 
         add(sidebarLayout, userInfoLayout);
     }
