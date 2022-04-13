@@ -2,8 +2,6 @@ package com.ctrlcutter.frontend.views.shortcutcreationform.textform;
 
 import java.util.Objects;
 
-import org.springframework.http.ResponseEntity;
-
 import com.ctrlcutter.frontend.entities.form.IFormShortcutEntity;
 import com.ctrlcutter.frontend.entities.form.TextShortcutFormEntity;
 import com.ctrlcutter.frontend.entities.rest.BasicScriptDTO;
@@ -11,7 +9,9 @@ import com.ctrlcutter.frontend.entities.shortcut.Shortcut;
 import com.ctrlcutter.frontend.util.constants.CTRLCutterConstants;
 import com.ctrlcutter.frontend.util.rest.RestRequestHelper;
 import com.ctrlcutter.frontend.util.rest.ShortcutMapper;
+import com.ctrlcutter.frontend.util.ui.ViewRedirectionUtility;
 import com.ctrlcutter.frontend.views.shortcutcreationform.components.ShortcutSelector;
+import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -53,11 +53,8 @@ public class TextShortcutFormComponent extends VerticalLayout {
         if (!userInputText.equals("")) {
             IFormShortcutEntity shortcutEntity = new TextShortcutFormEntity(selectedShortcut, userInputText);
             BasicScriptDTO scriptDTO = ShortcutMapper.mapShortcutToDTO(shortcutEntity);
-
-            ResponseEntity<String> response = RestRequestHelper.makeShortcutRESTRequest(scriptDTO);
-
-            System.out.println(response.getBody());
+            RestRequestHelper.makeShortcutRESTRequest(scriptDTO);
+            ViewRedirectionUtility.redirectToView(ShortcutMenuView.class);
         }
     }
-
 }
