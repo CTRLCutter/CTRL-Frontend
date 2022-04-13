@@ -31,6 +31,19 @@ public enum ModifierKeys {
         }
     }
 
+    public static ModifierKeys getModifierKeyFromString(String modifierKeyString) {
+
+        for (ModifierKeys key : values()) {
+
+            String keyValue = key.getStringRepresentation().toUpperCase();
+            if (keyValue.equals(modifierKeyString)) {
+                return key;
+            }
+        }
+
+        return null;
+    }
+
     public String getStringRepresentation() {
         return stringRepresentation;
     }

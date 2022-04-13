@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.ctrlcutter.frontend.entities.shortcut.IShortcutProvider;
 import com.ctrlcutter.frontend.entities.shortcut.Shortcut;
-import com.ctrlcutter.frontend.util.MockShortcutProvider;
+import com.ctrlcutter.frontend.util.ShortcutProvider;
 import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.EmptyShortcutContentLayout;
 import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.ShortcutContentLayout;
 import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.SidebarLayout;
@@ -27,7 +27,7 @@ public class ShortcutMenuView extends HorizontalLayout {
         
         add(sidebarLayout);
 
-        IShortcutProvider shortcutProvider = new MockShortcutProvider();
+        IShortcutProvider shortcutProvider = new ShortcutProvider();
         List<Shortcut> existingShortcuts = shortcutProvider.provideUserShortcuts();
 
         Component shortcutContentLayout = new EmptyShortcutContentLayout();

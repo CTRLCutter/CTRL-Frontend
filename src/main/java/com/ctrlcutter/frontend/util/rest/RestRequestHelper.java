@@ -6,19 +6,23 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Base64.Encoder;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.ctrlcutter.frontend.dtos.BasicScriptDTO;
 import com.ctrlcutter.frontend.dtos.LoginUserDTO;
 import com.ctrlcutter.frontend.dtos.RegistrationUserDTO;
 import com.ctrlcutter.frontend.dtos.SessionDTO;
 import com.ctrlcutter.frontend.dtos.SessionUserDTO;
-import com.ctrlcutter.frontend.entities.rest.BasicScriptDTO;
 import com.ctrlcutter.frontend.util.rest.exception.APIRequestException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -42,6 +46,38 @@ public class RestRequestHelper {
         return session;
     }
 
+    public static List<BasicScriptDTO> getAllScripts() {
+        String responseJson = executeGetRequest("storage/allBasic");
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            
+            if(responseJson.equals("")) {
+                return new ArrayList<>();
+            }
+            
+            List<BasicScriptDTO> list = mapper.readValue(responseJson, TypeFactory.defaultInstance().constructCollectionType(List.class, BasicScriptDTO.class));
+            return list;
+        } catch (JsonProcessingException e) {
+            throw new APIRequestException("Request execution of client during REST-API call failed.", e);
+        }
+    }
+
+    public static String executeGetRequest(String endpoint) {
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest req = HttpRequest.newBuilder(URI.create(BASE_URL + endpoint)).header("content-type", APPLICATION_TYPE)
+                .header("Authorization", generateBasicAuthHeaderValue()).GET().build();
+        String responseJson = "";
+        try {
+            HttpResponse<String> response = client.send(req, BodyHandlers.ofString());
+            responseJson = response.body();
+        } catch (IOException | InterruptedException e) {
+            throw new APIRequestException("Request execution of client during REST-API call failed.", e);
+        }
+        return responseJson;
+    }
+
     public static SessionUserDTO retrieveUserInformation(String sessionKey) {
         HttpClient client = HttpClient.newHttpClient();
 
@@ -50,18 +86,14 @@ public class RestRequestHelper {
 
         try {
             HttpResponse<String> response = client.send(req, BodyHandlers.ofString());
-            String responseBody = response.body();
-
-            ObjectMapper mapper = new ObjectMapper();
-            SessionUserDTO userInfo = mapper.readValue(responseBody, SessionUserDTO.class);
-
+            SessionUserDTO userInfo = JsonMapper.mapJsonToObject(response.body(), SessionUserDTO.class);
             return userInfo;
         } catch (IOException | InterruptedException e) {
             throw new APIRequestException("Request execution of client during REST-API call failed.", e);
         }
     }
 
-    public static ResponseEntity<String> makeShortcutRESTRequest(BasicScriptDTO scriptDTO) {
+    public static ResponseEntity<String> makeShortcutRESTRequest(com.ctrlcutter.frontend.entities.rest.BasicScriptDTO scriptDTO) {
         String json = JsonMapper.mapObjectToJson(scriptDTO);
         return makeGenericRESTRequest("script/basic/", json);
     }
