@@ -18,8 +18,6 @@ import com.ctrlcutter.frontend.dtos.SessionDTO;
 import com.ctrlcutter.frontend.dtos.SessionUserDTO;
 import com.ctrlcutter.frontend.entities.rest.BasicScriptDTO;
 import com.ctrlcutter.frontend.util.rest.exception.APIRequestException;
-import com.ctrlcutter.frontend.util.rest.exception.JsonMappingException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -34,13 +32,13 @@ public class RestRequestHelper {
 
     public static SessionDTO registerUser(RegistrationUserDTO user) {
         HttpResponse<String> response = executeModificationRequestWithEntity(BASE_URL + "customer/signup/", user);
-        SessionDTO session = mapToSessionDTO(response.body());
+        SessionDTO session = JsonMapper.mapJsonToObject(response.body(), SessionDTO.class);
         return session;
     }
 
     public static SessionDTO loginUser(LoginUserDTO user) {
         HttpResponse<String> response = executeModificationRequestWithEntity(BASE_URL + "customer/login/", user);
-        SessionDTO session = mapToSessionDTO(response.body());
+        SessionDTO session = JsonMapper.mapJsonToObject(response.body(), SessionDTO.class);
         return session;
     }
 
@@ -64,7 +62,7 @@ public class RestRequestHelper {
     }
 
     public static ResponseEntity<String> makeShortcutRESTRequest(BasicScriptDTO scriptDTO) {
-        String json = mapObjectToJson(scriptDTO);
+        String json = JsonMapper.mapObjectToJson(scriptDTO);
         return makeGenericRESTRequest("script/basic/", json);
     }
 
@@ -88,28 +86,8 @@ public class RestRequestHelper {
         }
     }
 
-    private static SessionDTO mapToSessionDTO(String sessionJson) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            SessionDTO session = mapper.readValue(sessionJson, SessionDTO.class);
-            return session;
-        } catch (JsonProcessingException e) {
-            throw new JsonMappingException("Error while JSON-Mapping during a REST-Request.", e);
-        }
-    }
-
-    private static String mapObjectToJson(Object o) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String issueJson = mapper.writeValueAsString(o);
-            return issueJson;
-        } catch (JsonProcessingException e) {
-            throw new JsonMappingException("Error while JSON-Mapping during a REST-Request.", e);
-        }
-    }
-
     private static HttpResponse<String> executeModificationRequestWithEntity(String uri, Object requestObject) {
-        String objectJson = mapObjectToJson(requestObject);
+        String objectJson = JsonMapper.mapObjectToJson(requestObject);
 
         HttpClient client = HttpClient.newHttpClient();
 
