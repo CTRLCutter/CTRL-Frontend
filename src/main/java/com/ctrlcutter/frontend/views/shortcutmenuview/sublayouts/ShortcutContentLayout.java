@@ -24,7 +24,6 @@ public class ShortcutContentLayout extends VerticalLayout {
     private List<Hotstring> hotstrings;
 
     public ShortcutContentLayout(List<Shortcut> shortcuts, List<Hotstring> hotstrings) {
-
         setHeightFull();
         setId("contentLayout");
         this.shortcuts = shortcuts;
@@ -35,8 +34,8 @@ public class ShortcutContentLayout extends VerticalLayout {
 
         this.contentLayout = generateShortcutLayout(shortcuts);
 
-        this.shortcutTab = new Tab("Shortcuts");
-        this.hotstringTab = new Tab("Hotstrings");
+        this.shortcutTab = new Tab(getTranslation("shortcutmenu_shortcuts"));
+        this.hotstringTab = new Tab(getTranslation("shortcutmenu_hotstrings"));
 
         Tabs tabs = new Tabs(shortcutTab, hotstringTab);
         tabs.setWidthFull();
@@ -44,11 +43,9 @@ public class ShortcutContentLayout extends VerticalLayout {
         tabs.addSelectedChangeListener(this::setContent);
 
         add(tabs, this.contentLayout);
-
     }
 
     private void setContent(SelectedChangeEvent event) {
-
         Tab newTab = event.getSelectedTab();
         String tabLabel = newTab.getLabel();
 
@@ -89,7 +86,6 @@ public class ShortcutContentLayout extends VerticalLayout {
         VerticalLayout hotstringLayout = new VerticalLayout();
 
         for (Hotstring hotstring : hotstrings) {
-
             Div hotstringDiv = new Div();
             hotstringDiv.setClassName("shortcutItem");
 
