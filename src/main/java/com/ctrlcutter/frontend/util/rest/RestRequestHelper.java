@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import com.ctrlcutter.frontend.dtos.BasicScriptDTO;
 import com.ctrlcutter.frontend.dtos.HotstringDTO;
 import com.ctrlcutter.frontend.dtos.LoginUserDTO;
+import com.ctrlcutter.frontend.dtos.PredefinedScriptDTO;
 import com.ctrlcutter.frontend.dtos.RegistrationUserDTO;
 import com.ctrlcutter.frontend.dtos.SessionDTO;
 import com.ctrlcutter.frontend.dtos.SessionUserDTO;
@@ -52,12 +53,25 @@ public class RestRequestHelper {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-
             if (responseJson.equals("")) {
                 return new ArrayList<>();
             }
-
             List<BasicScriptDTO> list = mapper.readValue(responseJson, TypeFactory.defaultInstance().constructCollectionType(List.class, BasicScriptDTO.class));
+            return list;
+        } catch (JsonProcessingException e) {
+            throw new APIRequestException("Request execution of client during REST-API call failed.", e);
+        }
+    }
+    
+    public static List<PredefinedScriptDTO> getAllPredefinedScripts() {
+        String responseJson = executeGetRequest("storage/allPreDefined");
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            if (responseJson.equals("")) {
+                return new ArrayList<>();
+            }
+            List<PredefinedScriptDTO> list = mapper.readValue(responseJson, TypeFactory.defaultInstance().constructCollectionType(List.class, PredefinedScriptDTO.class));
             return list;
         } catch (JsonProcessingException e) {
             throw new APIRequestException("Request execution of client during REST-API call failed.", e);
