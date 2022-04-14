@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.ctrlcutter.frontend.dtos.BasicScriptDTO;
+import com.ctrlcutter.frontend.dtos.HotstringDTO;
 import com.ctrlcutter.frontend.dtos.LoginUserDTO;
 import com.ctrlcutter.frontend.dtos.RegistrationUserDTO;
 import com.ctrlcutter.frontend.dtos.SessionDTO;
@@ -51,12 +52,29 @@ public class RestRequestHelper {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            
-            if(responseJson.equals("")) {
+
+            if (responseJson.equals("")) {
                 return new ArrayList<>();
             }
-            
+
             List<BasicScriptDTO> list = mapper.readValue(responseJson, TypeFactory.defaultInstance().constructCollectionType(List.class, BasicScriptDTO.class));
+            return list;
+        } catch (JsonProcessingException e) {
+            throw new APIRequestException("Request execution of client during REST-API call failed.", e);
+        }
+    }
+
+    public static List<HotstringDTO> getAllHotstrings() {
+        String responseJson = executeGetRequest("storage/allHotstring");
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+
+            if (responseJson.equals("")) {
+                return new ArrayList<>();
+            }
+
+            List<HotstringDTO> list = mapper.readValue(responseJson, TypeFactory.defaultInstance().constructCollectionType(List.class, HotstringDTO.class));
             return list;
         } catch (JsonProcessingException e) {
             throw new APIRequestException("Request execution of client during REST-API call failed.", e);

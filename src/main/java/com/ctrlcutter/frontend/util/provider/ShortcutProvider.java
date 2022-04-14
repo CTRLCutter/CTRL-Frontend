@@ -1,4 +1,4 @@
-package com.ctrlcutter.frontend.util;
+package com.ctrlcutter.frontend.util.provider;
 
 import java.util.List;
 import java.util.stream.Collectors;

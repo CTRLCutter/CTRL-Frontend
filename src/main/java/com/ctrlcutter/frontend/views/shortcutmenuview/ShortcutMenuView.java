@@ -2,9 +2,12 @@ package com.ctrlcutter.frontend.views.shortcutmenuview;
 
 import java.util.List;
 
+import com.ctrlcutter.frontend.entities.hotstring.Hotstring;
+import com.ctrlcutter.frontend.entities.hotstring.IHotstringProvider;
 import com.ctrlcutter.frontend.entities.shortcut.IShortcutProvider;
 import com.ctrlcutter.frontend.entities.shortcut.Shortcut;
-import com.ctrlcutter.frontend.util.ShortcutProvider;
+import com.ctrlcutter.frontend.util.provider.HotstringProvider;
+import com.ctrlcutter.frontend.util.provider.ShortcutProvider;
 import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.EmptyShortcutContentLayout;
 import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.ShortcutContentLayout;
 import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.SidebarLayout;
@@ -24,16 +27,19 @@ public class ShortcutMenuView extends HorizontalLayout {
         setId("menuView");
 
         SidebarLayout sidebarLayout = new SidebarLayout(ShortcutMenuSidebarOptions.SHORTCUTS);
-        
+
         add(sidebarLayout);
 
         IShortcutProvider shortcutProvider = new ShortcutProvider();
         List<Shortcut> existingShortcuts = shortcutProvider.provideUserShortcuts();
 
+        IHotstringProvider hotstringProvider = new HotstringProvider();
+        List<Hotstring> existingHotstrings = hotstringProvider.provideUserHotstrings();
+
         Component shortcutContentLayout = new EmptyShortcutContentLayout();
 
-        if (existingShortcuts.size() > 0) {
-            shortcutContentLayout = new ShortcutContentLayout(existingShortcuts);
+        if (existingShortcuts.size() > 0 || existingHotstrings.size() > 0) {
+            shortcutContentLayout = new ShortcutContentLayout(existingShortcuts, existingHotstrings);
         }
 
         add(shortcutContentLayout);

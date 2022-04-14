@@ -1,4 +1,4 @@
-package com.ctrlcutter.frontend.util;
+package com.ctrlcutter.frontend.util.provider;
 
 import java.util.ArrayList;
 import java.util.List;
