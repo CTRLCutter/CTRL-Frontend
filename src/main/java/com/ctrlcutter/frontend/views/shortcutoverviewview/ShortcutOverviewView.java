@@ -1,9 +1,12 @@
 package com.ctrlcutter.frontend.views.shortcutoverviewview;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ctrlcutter.frontend.dtos.BasicScriptDTO;
+import com.ctrlcutter.frontend.dtos.DefaultScriptDTO;
+import com.ctrlcutter.frontend.dtos.PredefinedScriptDTO;
 import com.ctrlcutter.frontend.entities.shortcut.BasicKey;
 import com.ctrlcutter.frontend.entities.shortcut.ModifierKey;
 import com.ctrlcutter.frontend.entities.shortcut.ModifierKeys;
@@ -30,6 +33,7 @@ import com.vaadin.flow.router.WildcardParameter;
 public class ShortcutOverviewView extends HorizontalLayout implements HasUrlParameter<String> {
 
     private Long shortcutId;
+    private Optional<Long> defaultScriptId;
     private String type;
 
     @Override
@@ -39,6 +43,12 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
 
         this.type = parameterValues[0];
         this.shortcutId = Long.parseLong(parameterValues[1]);
+        this.defaultScriptId = Optional.empty();
+
+        if (parameterValues.length > 2) {
+            this.defaultScriptId = Optional.of(Long.parseLong(parameterValues[2]));
+        }
+
         initOverview();
     }
 
@@ -57,6 +67,13 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
             overviewShortcut = new OverviewShortcut(shortcut, shortcutType);
         }
 
+        if (this.type.equals("predefined")) {
+            PredefinedScriptDTO scriptDTO = ShortcutHelper.getPredefinedShortcutById(this.shortcutId);
+            List<Shortcut> shortcuts = scriptDTO.getShortcuts().stream().map(this::mapDefaultScriptToShortcut).collect(Collectors.toList());
+            Shortcut shortcut = ShortcutHelper.getShortcutById(shortcuts, this.defaultScriptId.get());
+            overviewShortcut = new PredefinedOverviewShortcut(shortcut, this.type);
+        }
+
         VerticalLayout contentLayout = generateContentLayout(overviewShortcut);
         HorizontalLayout buttonLayout = generateButtonLayout();
 
@@ -70,6 +87,17 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
         List<ModifierKeys> modifierKeyEnumValues = modifierKeys.stream().map(ModifierKeys::getModifierKeyFromString).collect(Collectors.toList());
         List<ModifierKey> modifierKeyValues = modifierKeyEnumValues.stream().map(ModifierKey::new).collect(Collectors.toList());
         Shortcut shortcut = new Shortcut(basicKey, modifierKeyValues);
+
+        return shortcut;
+    }
+
+    private Shortcut mapDefaultScriptToShortcut(DefaultScriptDTO scriptDTO) {
+        BasicKey basicKey = new BasicKey(scriptDTO.getKey().toCharArray()[0]);
+        List<String> modifierKeys = scriptDTO.getModifierKeys();
+        List<ModifierKeys> modifierKeyEnumValues = modifierKeys.stream().map(ModifierKeys::getModifierKeyFromString).collect(Collectors.toList());
+        List<ModifierKey> modifierKeyValues = modifierKeyEnumValues.stream().map(ModifierKey::new).collect(Collectors.toList());
+        Shortcut shortcut = new Shortcut(basicKey, modifierKeyValues);
+        shortcut.setId(Optional.of(scriptDTO.getId()));
 
         return shortcut;
     }

@@ -1,6 +1,7 @@
 package com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.ctrlcutter.frontend.entities.hotstring.Hotstring;
 import com.ctrlcutter.frontend.entities.shortcut.Script;
@@ -66,22 +67,39 @@ public class ShortcutContentLayout extends VerticalLayout {
         VerticalLayout shortcutLayout = new VerticalLayout();
 
         for (Script script : scripts) {
-            Div shortcutDiv = new Div();
-            shortcutDiv.setClassName("shortcutItem");
-
-            Shortcut shortcut = script.getShortcuts().get(0);
-            shortcutDiv.setText(shortcut.getStringRepresentation());
-
-            Button redirectionButton = new Button("Details");
-            redirectionButton.addClickListener(e -> {
-                UI.getCurrent().navigate(ShortcutOverviewView.class, script.getScriptType() + "/" + script.getId());
-            });
-
-            shortcutDiv.add(redirectionButton);
-            shortcutLayout.add(shortcutDiv);
+            for (Shortcut shortcut : script.getShortcuts()) {
+                Div shortcutDiv = generateShortcutDiv(script, shortcut);
+                shortcutLayout.add(shortcutDiv);
+            }
         }
 
         return shortcutLayout;
+    }
+
+    private Div generateShortcutDiv(Script script, Shortcut shortcut) {
+        Div shortcutDiv = new Div();
+        shortcutDiv.setClassName("shortcutItem");
+        shortcutDiv.setText(shortcut.getStringRepresentation());
+
+        Button redirectionButton = new Button("Details");
+        redirectionButton.addClickListener(e -> {
+            String path = getOverviewPath(script.getScriptType(), script.getId(), shortcut.getId());
+            UI.getCurrent().navigate(ShortcutOverviewView.class, path);
+        });
+
+        shortcutDiv.add(redirectionButton);
+
+        return shortcutDiv;
+    }
+
+    private String getOverviewPath(String scriptType, Long scriptId, Optional<Long> shortcutId) {
+        String path = scriptType + "/" + scriptId;
+
+        if (scriptType.equals("predefined")) {
+            path = scriptType + "/" + scriptId + "/" + shortcutId.get();
+        }
+
+        return path;
     }
 
     private VerticalLayout generateHotstringLayout(List<Hotstring> hotstrings) {

@@ -2,11 +2,13 @@ package com.ctrlcutter.frontend.entities.shortcut;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class Shortcut {
 
     private List<ModifierKey> modifierKeys;
     private BasicKey basicKey;
+    private Optional<Long> id;
 
     public Shortcut(BasicKey basicKey, ModifierKey... modifierKeys) {
 
@@ -15,9 +17,9 @@ public class Shortcut {
     }
 
     public Shortcut(BasicKey basicKey, List<ModifierKey> modifierKeys) {
-        
         this.basicKey = basicKey;
         this.modifierKeys = modifierKeys;
+        this.id = Optional.empty();
     }
 
     public BasicKey getBasicKey() {
@@ -28,8 +30,15 @@ public class Shortcut {
         return this.modifierKeys;
     }
 
-    public String getStringRepresentation() {
+    public Optional<Long> getId() {
+        return id;
+    }
 
+    public void setId(Optional<Long> id) {
+        this.id = id;
+    }
+
+    public String getStringRepresentation() {
         StringBuilder stringRepresentationBuilder = new StringBuilder();
 
         stringRepresentationBuilder.append(getModifierKeyStringRepresenation());
@@ -39,7 +48,6 @@ public class Shortcut {
     }
 
     private String getModifierKeyStringRepresenation() {
-
         StringBuilder modifierKeyStringRepresentationBuilder = new StringBuilder();
 
         for (ModifierKey key : this.modifierKeys) {
@@ -49,5 +57,4 @@ public class Shortcut {
 
         return modifierKeyStringRepresentationBuilder.toString();
     }
-
 }

@@ -50,6 +50,7 @@ public class ScriptMapper {
         List<ModifierKeys> modifierKeyEnumValues = modifierKeys.stream().map(ModifierKeys::getModifierKeyFromString).collect(Collectors.toList());
         List<ModifierKey> modifierKeyValues = modifierKeyEnumValues.stream().map(ModifierKey::new).collect(Collectors.toList());
         Shortcut shortcut = new Shortcut(basicKey, modifierKeyValues);
+        shortcut.setId(Optional.of(scriptDTO.getId()));
 
         return shortcut;
     }
