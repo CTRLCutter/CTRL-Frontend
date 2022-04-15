@@ -77,7 +77,7 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
     private VerticalLayout generateContentLayout(IOverviewShortcut overviewShortcut) {
         VerticalLayout contentLayout = new VerticalLayout();
 
-        H2 title = new H2("Shortcut Overview");
+        H2 title = new H2(getTranslation("overview_title"));
         title.setWidthFull();
         title.addClassName("centeredText");
 
@@ -103,7 +103,7 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
     }
 
     private Button generateEditButton() {
-        Button editButton = new Button("Edit");
+        Button editButton = new Button(getTranslation("overview_edit_button_title"));
         editButton.addClassName("overviewButton");
         editButton.addClickListener(e -> {
             Notification.show("Edit button stub.");
@@ -113,7 +113,7 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
     }
 
     private Button generateDeleteButton() {
-        Button deleteButton = new Button("Delete");
+        Button deleteButton = new Button(getTranslation("overview_delete_button_title"));
         deleteButton.addClassName("overviewButton");
         deleteButton.setId("deleteButton");
         deleteButton.addClickListener(e -> {
