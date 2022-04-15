@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface IShortcutProvider {
 
-    public List<Shortcut> provideUserShortcuts();
-    
+    public List<Script> provideUserScripts();
+
 }

@@ -3,6 +3,7 @@ package com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts;
 import java.util.List;
 
 import com.ctrlcutter.frontend.entities.hotstring.Hotstring;
+import com.ctrlcutter.frontend.entities.shortcut.Script;
 import com.ctrlcutter.frontend.entities.shortcut.Shortcut;
 import com.ctrlcutter.frontend.views.shortcutoverviewview.ShortcutOverviewView;
 import com.vaadin.flow.component.UI;
@@ -20,19 +21,19 @@ public class ShortcutContentLayout extends VerticalLayout {
     private Tab shortcutTab;
     private Tab hotstringTab;
     private VerticalLayout contentLayout;
-    private List<Shortcut> shortcuts;
+    private List<Script> scripts;
     private List<Hotstring> hotstrings;
 
-    public ShortcutContentLayout(List<Shortcut> shortcuts, List<Hotstring> hotstrings) {
+    public ShortcutContentLayout(List<Script> scripts, List<Hotstring> hotstrings) {
         setHeightFull();
         setId("contentLayout");
-        this.shortcuts = shortcuts;
+        this.scripts = scripts;
         this.hotstrings = hotstrings;
 
         H2 header = new H2(getTranslation("my_shortcuts_header"));
         add(header);
 
-        this.contentLayout = generateShortcutLayout(shortcuts);
+        this.contentLayout = generateShortcutLayout(scripts);
 
         this.shortcutTab = new Tab(getTranslation("shortcutmenu_shortcuts"));
         this.hotstringTab = new Tab(getTranslation("shortcutmenu_hotstrings"));
@@ -53,26 +54,27 @@ public class ShortcutContentLayout extends VerticalLayout {
         this.contentLayout.removeAll();
 
         if (tabLabel.equals(this.shortcutTab.getLabel())) {
-            this.contentLayout = generateShortcutLayout(this.shortcuts);
+            this.contentLayout = generateShortcutLayout(this.scripts);
         } else if (tabLabel.equals(this.hotstringTab.getLabel())) {
             this.contentLayout = generateHotstringLayout(this.hotstrings);
         }
-        
+
         add(this.contentLayout);
     }
 
-    private VerticalLayout generateShortcutLayout(List<Shortcut> shortcuts) {
+    private VerticalLayout generateShortcutLayout(List<Script> scripts) {
         VerticalLayout shortcutLayout = new VerticalLayout();
 
-        for (Shortcut shortcut : shortcuts) {
+        for (Script script : scripts) {
             Div shortcutDiv = new Div();
             shortcutDiv.setClassName("shortcutItem");
 
+            Shortcut shortcut = script.getShortcuts().get(0);
             shortcutDiv.setText(shortcut.getStringRepresentation());
 
             Button redirectionButton = new Button("Details");
             redirectionButton.addClickListener(e -> {
-                UI.getCurrent().navigate(ShortcutOverviewView.class, "testId");
+                UI.getCurrent().navigate(ShortcutOverviewView.class, script.getScriptType() + "/" + script.getId());
             });
 
             shortcutDiv.add(redirectionButton);
@@ -93,7 +95,7 @@ public class ShortcutContentLayout extends VerticalLayout {
 
             Button redirectionButton = new Button("Details");
             redirectionButton.addClickListener(e -> {
-                UI.getCurrent().navigate(ShortcutOverviewView.class, "testId");
+                UI.getCurrent().navigate(ShortcutOverviewView.class, "basic/123");
             });
 
             hotstringDiv.add(redirectionButton);

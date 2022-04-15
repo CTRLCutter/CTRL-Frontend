@@ -1,5 +1,14 @@
 package com.ctrlcutter.frontend.views.shortcutoverviewview;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.ctrlcutter.frontend.dtos.BasicScriptDTO;
+import com.ctrlcutter.frontend.entities.shortcut.BasicKey;
+import com.ctrlcutter.frontend.entities.shortcut.ModifierKey;
+import com.ctrlcutter.frontend.entities.shortcut.ModifierKeys;
+import com.ctrlcutter.frontend.entities.shortcut.Shortcut;
+import com.ctrlcutter.frontend.util.rest.ShortcutHelper;
 import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuSidebarOptions;
 import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.SidebarLayout;
 import com.vaadin.flow.component.button.Button;
@@ -20,45 +29,90 @@ import com.vaadin.flow.router.WildcardParameter;
 @CssImport("./themes/ctrlcutter/shortcutOverview.css")
 public class ShortcutOverviewView extends HorizontalLayout implements HasUrlParameter<String> {
 
-    private String shortcutId;
+    private Long shortcutId;
+    private String type;
 
     @Override
     public void setParameter(BeforeEvent event, @WildcardParameter String parameter) {
 
-        this.shortcutId = parameter;
+        String[] parameterValues = parameter.split("/");
+
+        this.type = parameterValues[0];
+        this.shortcutId = Long.parseLong(parameterValues[1]);
         initOverview();
     }
 
     private void initOverview() {
-
         setId("shortcutOverview");
 
         SidebarLayout sidebarLayout = new SidebarLayout(ShortcutMenuSidebarOptions.SHORTCUTS);
         add(sidebarLayout);
 
-        IOverviewShortcut shortcut = new MockShortcut();
+        IOverviewShortcut overviewShortcut = null;
 
+        if (this.type.equals("basic")) {
+            BasicScriptDTO scriptDTO = ShortcutHelper.getShortcutById(this.shortcutId);
+            Shortcut shortcut = mapScriptDTOToShortcut(scriptDTO);
+            OverviewShortcutType shortcutType = OverviewShortcutType.getShortcutTypeByCommand(scriptDTO.getCommand());
+            overviewShortcut = new OverviewShortcut(shortcut, shortcutType);
+        }
+
+        VerticalLayout contentLayout = generateContentLayout(overviewShortcut);
+        HorizontalLayout buttonLayout = generateButtonLayout();
+
+        contentLayout.add(buttonLayout);
+        add(contentLayout);
+    }
+
+    private Shortcut mapScriptDTOToShortcut(BasicScriptDTO scriptDTO) {
+        BasicKey basicKey = new BasicKey(scriptDTO.getKey().toCharArray()[0]);
+        List<String> modifierKeys = scriptDTO.getModifierKeys();
+        List<ModifierKeys> modifierKeyEnumValues = modifierKeys.stream().map(ModifierKeys::getModifierKeyFromString).collect(Collectors.toList());
+        List<ModifierKey> modifierKeyValues = modifierKeyEnumValues.stream().map(ModifierKey::new).collect(Collectors.toList());
+        Shortcut shortcut = new Shortcut(basicKey, modifierKeyValues);
+
+        return shortcut;
+    }
+
+    private VerticalLayout generateContentLayout(IOverviewShortcut overviewShortcut) {
         VerticalLayout contentLayout = new VerticalLayout();
 
         H2 title = new H2("Shortcut Overview");
         title.setWidthFull();
         title.addClassName("centeredText");
-        
-        Label shortcutTypeLabel = new Label(shortcut.getShortcutType());
-        Label shortcutActionLabel = new Label(shortcut.getShortcutAction());
-        Label shortcutKeysLabel = new Label(shortcut.getShortcut().getStringRepresentation());
+
+        Label shortcutTypeLabel = new Label(overviewShortcut.getShortcutType());
+        Label shortcutActionLabel = new Label(overviewShortcut.getShortcutAction());
+        Label shortcutKeysLabel = new Label(overviewShortcut.getShortcut().getStringRepresentation());
 
         contentLayout.add(title, shortcutTypeLabel, shortcutActionLabel, shortcutKeysLabel);
 
+        return contentLayout;
+    }
+
+    private HorizontalLayout generateButtonLayout() {
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.setWidthFull();
 
+        Button editButton = generateEditButton();
+        Button deleteButton = generateDeleteButton();
+
+        buttonLayout.add(editButton, deleteButton);
+
+        return buttonLayout;
+    }
+
+    private Button generateEditButton() {
         Button editButton = new Button("Edit");
         editButton.addClassName("overviewButton");
         editButton.addClickListener(e -> {
             Notification.show("Edit button stub.");
         });
 
+        return editButton;
+    }
+
+    private Button generateDeleteButton() {
         Button deleteButton = new Button("Delete");
         deleteButton.addClassName("overviewButton");
         deleteButton.setId("deleteButton");
@@ -66,10 +120,6 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
             Notification.show("Delete button stub.");
         });
 
-        buttonLayout.add(editButton, deleteButton);
-
-        contentLayout.add(buttonLayout);
-
-        add(contentLayout);
+        return deleteButton;
     }
 }
