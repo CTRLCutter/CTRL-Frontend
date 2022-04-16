@@ -1,11 +1,10 @@
-package com.ctrlcutter.frontend.util.provider;
+package com.ctrlcutter.frontend.util.mapper;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ctrlcutter.frontend.dtos.BasicScriptDTO;
-import com.ctrlcutter.frontend.dtos.DefaultScriptDTO;
 import com.ctrlcutter.frontend.dtos.PredefinedScriptDTO;
 import com.ctrlcutter.frontend.entities.shortcut.BasicKey;
 import com.ctrlcutter.frontend.entities.shortcut.ModifierKey;
@@ -30,28 +29,10 @@ public class ScriptMapper {
     }
 
     public static Script mapPredefinedScriptToScript(PredefinedScriptDTO scriptDTO) {
-        List<Shortcut> shortcuts = mapPredefinedScriptDTOToShortcut(scriptDTO);
+        List<Shortcut> shortcuts = ShortcutMapper.mapPredefinedScriptDTOToShortcut(scriptDTO);
         Script script = new Script(shortcuts, scriptDTO.getOs(), "predefined", scriptDTO.getId());
         script.setPredefinedType(Optional.of(scriptDTO.getScriptType()));
 
         return script;
-    }
-
-    private static List<Shortcut> mapPredefinedScriptDTOToShortcut(PredefinedScriptDTO scriptDTO) {
-        List<DefaultScriptDTO> defaultScriptDTO = scriptDTO.getShortcuts();
-        List<Shortcut> mappedShortcuts = defaultScriptDTO.stream().map(ScriptMapper::mapDefaultScriptDTOToShortcut).collect(Collectors.toList());
-
-        return mappedShortcuts;
-    }
-
-    private static Shortcut mapDefaultScriptDTOToShortcut(DefaultScriptDTO scriptDTO) {
-        BasicKey basicKey = new BasicKey(scriptDTO.getKey().toCharArray()[0]);
-        List<String> modifierKeys = scriptDTO.getModifierKeys();
-        List<ModifierKeys> modifierKeyEnumValues = modifierKeys.stream().map(ModifierKeys::getModifierKeyFromString).collect(Collectors.toList());
-        List<ModifierKey> modifierKeyValues = modifierKeyEnumValues.stream().map(ModifierKey::new).collect(Collectors.toList());
-        Shortcut shortcut = new Shortcut(basicKey, modifierKeyValues);
-        shortcut.setId(Optional.of(scriptDTO.getId()));
-
-        return shortcut;
     }
 }

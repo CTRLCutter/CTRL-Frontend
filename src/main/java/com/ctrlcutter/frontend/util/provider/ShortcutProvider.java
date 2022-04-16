@@ -7,6 +7,7 @@ import com.ctrlcutter.frontend.dtos.BasicScriptDTO;
 import com.ctrlcutter.frontend.dtos.PredefinedScriptDTO;
 import com.ctrlcutter.frontend.entities.shortcut.IShortcutProvider;
 import com.ctrlcutter.frontend.entities.shortcut.Script;
+import com.ctrlcutter.frontend.util.mapper.ScriptMapper;
 import com.ctrlcutter.frontend.util.rest.RestRequestHelper;
 
 public class ShortcutProvider implements IShortcutProvider {
