@@ -9,6 +9,7 @@ import com.ctrlcutter.frontend.dtos.PredefinedScriptDTO;
 import com.ctrlcutter.frontend.entities.shortcut.Shortcut;
 import com.ctrlcutter.frontend.util.mapper.ShortcutMapper;
 import com.ctrlcutter.frontend.util.rest.ShortcutHelper;
+import com.ctrlcutter.frontend.util.script.WindowsProcessKiller;
 import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuSidebarOptions;
 import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.SidebarLayout;
 import com.vaadin.flow.component.button.Button;
@@ -99,8 +100,9 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
 
         Button editButton = generateEditButton();
         Button deleteButton = generateDeleteButton();
+        Button activationButton = generateActivationButton();
 
-        buttonLayout.add(editButton, deleteButton);
+        buttonLayout.add(editButton, deleteButton, activationButton);
 
         return buttonLayout;
     }
@@ -124,5 +126,19 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
         });
 
         return deleteButton;
+    }
+
+    private Button generateActivationButton() {
+        WindowsProcessKiller killer = new WindowsProcessKiller();
+        boolean scriptRunning = killer.isProcessRunning("process.exe");
+        String buttonTitle = (scriptRunning) ? getTranslation("overview_deactivate_button_title") : getTranslation("overview_activate_button_title");
+
+        Button activationButton = new Button(buttonTitle);
+        activationButton.addClassName("overviewButton");
+        activationButton.addClickListener(e -> {
+            Notification.show("Stub.");
+        });
+
+        return activationButton;
     }
 }
