@@ -6,10 +6,12 @@ public class PredefinedOverviewShortcut implements IOverviewShortcut {
 
     private final Shortcut shortcut;
     private final String shortcutType;
+    private final String action;
 
-    public PredefinedOverviewShortcut(Shortcut shortcut, String type) {
+    public PredefinedOverviewShortcut(Shortcut shortcut, String type, String action) {
         this.shortcut = shortcut;
         this.shortcutType = type;
+        this.action = action;
     }
 
     @Override
@@ -24,6 +26,6 @@ public class PredefinedOverviewShortcut implements IOverviewShortcut {
 
     @Override
     public String getShortcutAction() {
-        return null;
+        return "Runs: " + this.action;
     }
 }

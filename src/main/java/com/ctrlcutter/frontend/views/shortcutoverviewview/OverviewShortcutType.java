@@ -6,15 +6,17 @@ import java.util.Map;
 
 public enum OverviewShortcutType {
 
-    TEXT("Text Shortcut", "SEND"),
-    PROGRAM("Program Shortcut", "RUN");
+    TEXT("Text Shortcut", "SEND", "Outputs: "),
+    PROGRAM("Program Shortcut", "RUN", "Runs: ");
 
     private final String typeLabel;
     private final String commandType;
+    private final String actionPrefix;
 
-    private OverviewShortcutType(String typeLabel, String commandType) {
+    private OverviewShortcutType(String typeLabel, String commandType, String actionPrefix) {
         this.typeLabel = typeLabel;
         this.commandType = commandType;
+        this.actionPrefix = actionPrefix;
     }
 
     public static OverviewShortcutType getShortcutTypeByCommand(String commandType) {
@@ -32,5 +34,9 @@ public enum OverviewShortcutType {
 
     public String getCommandType() {
         return this.commandType;
+    }
+
+    public String getActionPrefix() {
+        return actionPrefix;
     }
 }

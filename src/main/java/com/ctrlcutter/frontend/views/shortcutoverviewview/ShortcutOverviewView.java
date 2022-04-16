@@ -60,14 +60,14 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
             BasicScriptDTO scriptDTO = ShortcutHelper.getShortcutById(this.shortcutId);
             Shortcut shortcut = ShortcutMapper.mapScriptDTOToShortcut(scriptDTO);
             OverviewShortcutType shortcutType = OverviewShortcutType.getShortcutTypeByCommand(scriptDTO.getCommand());
-            overviewShortcut = new OverviewShortcut(shortcut, shortcutType);
+            overviewShortcut = new OverviewShortcut(shortcut, shortcutType, scriptDTO.getParameters().get(0));
         }
 
         if (this.type.equals("predefined")) {
             PredefinedScriptDTO scriptDTO = ShortcutHelper.getPredefinedShortcutById(this.shortcutId);
             List<Shortcut> shortcuts = scriptDTO.getShortcuts().stream().map(ShortcutMapper::mapDefaultScriptDTOToShortcut).collect(Collectors.toList());
             Shortcut shortcut = ShortcutHelper.getShortcutById(shortcuts, this.defaultScriptId.get());
-            overviewShortcut = new PredefinedOverviewShortcut(shortcut, this.type);
+            overviewShortcut = new PredefinedOverviewShortcut(shortcut, this.type, scriptDTO.getScriptType());
         }
 
         VerticalLayout contentLayout = generateContentLayout(overviewShortcut);

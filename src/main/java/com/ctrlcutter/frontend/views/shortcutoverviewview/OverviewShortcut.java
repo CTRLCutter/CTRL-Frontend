@@ -6,10 +6,12 @@ public class OverviewShortcut implements IOverviewShortcut {
 
     private final Shortcut shortcut;
     private final OverviewShortcutType shortcutType;
+    private String action;
 
-    public OverviewShortcut(Shortcut shortcut, OverviewShortcutType shortcutType) {
+    public OverviewShortcut(Shortcut shortcut, OverviewShortcutType shortcutType, String action) {
         this.shortcut = shortcut;
         this.shortcutType = shortcutType;
+        this.action = action;
     }
 
     @Override
@@ -24,7 +26,6 @@ public class OverviewShortcut implements IOverviewShortcut {
 
     @Override
     public String getShortcutAction() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.shortcutType.getActionPrefix() + this.action;
     }
 }
