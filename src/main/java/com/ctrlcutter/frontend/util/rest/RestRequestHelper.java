@@ -105,6 +105,11 @@ public class RestRequestHelper {
         try {
             HttpResponse<String> response = client.send(req, BodyHandlers.ofString());
             responseJson = response.body();
+            
+            if(response.statusCode() == 404) {
+                return "";
+            }
+            
         } catch (IOException | InterruptedException e) {
             System.err.println("Request execution of client during REST-API call failed." + System.lineSeparator() + e.toString());
             return "";

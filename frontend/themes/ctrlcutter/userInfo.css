@@ -11,3 +11,11 @@ body {
 .centeredText {
 	text-align: center;
 }
+
+.userInfoButton {
+	margin: var(--lumo-space-xs) auto;
+}
+
+.userInfoButtonLayout {
+	width: 100%;
+}
