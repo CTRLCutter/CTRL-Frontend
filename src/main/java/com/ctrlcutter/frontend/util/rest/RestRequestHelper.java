@@ -62,7 +62,7 @@ public class RestRequestHelper {
             throw new APIRequestException("Request execution of client during REST-API call failed.", e);
         }
     }
-    
+
     public static List<PredefinedScriptDTO> getAllPredefinedScripts() {
         String responseJson = executeGetRequest("storage/allPreDefined");
         ObjectMapper mapper = new ObjectMapper();
@@ -71,7 +71,8 @@ public class RestRequestHelper {
             if (responseJson.equals("")) {
                 return new ArrayList<>();
             }
-            List<PredefinedScriptDTO> list = mapper.readValue(responseJson, TypeFactory.defaultInstance().constructCollectionType(List.class, PredefinedScriptDTO.class));
+            List<PredefinedScriptDTO> list =
+                    mapper.readValue(responseJson, TypeFactory.defaultInstance().constructCollectionType(List.class, PredefinedScriptDTO.class));
             return list;
         } catch (JsonProcessingException e) {
             throw new APIRequestException("Request execution of client during REST-API call failed.", e);
@@ -105,7 +106,8 @@ public class RestRequestHelper {
             HttpResponse<String> response = client.send(req, BodyHandlers.ofString());
             responseJson = response.body();
         } catch (IOException | InterruptedException e) {
-            throw new APIRequestException("Request execution of client during REST-API call failed.", e);
+            System.err.println("Request execution of client during REST-API call failed." + System.lineSeparator() + e.toString());
+            return "";
         }
         return responseJson;
     }
