@@ -22,6 +22,7 @@ public enum ShortcutMenuSidebarOptions {
     private ShortcutMenuSidebarOptions(Image optionIcon, String translationKey, Class<? extends Component> redirectionViewClass) {
 
         this.optionIcon = optionIcon;
+        this.optionIcon.getStyle().set("margin-left", "5px");
         this.translationKey = translationKey;
         this.redirectionViewClass = redirectionViewClass;
     }
