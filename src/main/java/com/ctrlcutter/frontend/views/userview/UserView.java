@@ -9,11 +9,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
@@ -35,61 +32,41 @@ public class UserView extends HorizontalLayout {
         SidebarLayout sidebarLayout = new SidebarLayout();
 
         VerticalLayout userInfoLayout = new VerticalLayout();
-        H2 headerText = new H2(getTranslation("userview_welcome", sessionUser.getUsername()));
-        headerText.addClassName("centeredText");
-        headerText.setWidthFull();
+        H2 headerText = generateHeaderText(sessionUser.getUsername());
 
-        Button logoutButton = generateLogoutButton(session);
-        logoutButton.addClassName("userInfoButton");
-        Button backupButton = new Button("Backup");
-        backupButton.addClassName("userInfoButton");
-        Button restoreBackupButton = new Button("Restore Backup");
-        restoreBackupButton.addClassName("userInfoButton");
-        restoreBackupButton.getStyle().set("color", "red");
-        
-        Dialog dialog = new Dialog();
-
-        VerticalLayout dialogLayout = createDialogLayout(dialog);
-        dialog.add(dialogLayout);
-        
-        restoreBackupButton.addClickListener(e -> dialog.open());
-
-        HorizontalLayout buttonLayout = new HorizontalLayout();
-        buttonLayout.addClassName("userInfoButtonLayout");
-        buttonLayout.add(logoutButton, backupButton, restoreBackupButton);
+        Dialog dialog = new BackupRestoreWarningDialog();
+        HorizontalLayout buttonLayout = generateButtonLayout(session, dialog);
 
         userInfoLayout.add(headerText, buttonLayout);
 
         add(sidebarLayout, userInfoLayout);
     }
-    
-    private static VerticalLayout createDialogLayout(Dialog dialog) {   
-        Paragraph infoText = new Paragraph("Are you sure that you want to restore the backup.");
-        Paragraph warningText = new Paragraph("All current data is getting deleted.");
-        
-        Button cancelButton = new Button("Cancel");
-        cancelButton.addClassName("userInfoButton");
-        cancelButton.addClickListener(e -> dialog.close());
-        Button confirmButton = new Button("Confirm");
-        confirmButton.addClassName("userInfoButton");
-        confirmButton.addClickListener(e -> dialog.close());
-        confirmButton.getStyle().set("color", "green");
-        
-        HorizontalLayout buttonLayout = new HorizontalLayout(cancelButton, confirmButton);
+
+    private H2 generateHeaderText(String sessionUserName) {
+        H2 headerText = new H2(getTranslation("userview_welcome", sessionUserName));
+        headerText.addClassName("centeredText");
+        headerText.setWidthFull();
+
+        return headerText;
+    }
+
+    private HorizontalLayout generateButtonLayout(VaadinSession session, Dialog dialog) {
+        Button logoutButton = generateLogoutButton(session);
+
+        Button backupButton = new Button(getTranslation("userview_backup_button"));
+        backupButton.addClassName("userInfoButton");
+
+        Button restoreBackupButton = generateRestoreBackupButton(dialog);
+
+        HorizontalLayout buttonLayout = new HorizontalLayout(logoutButton, backupButton, restoreBackupButton);
         buttonLayout.addClassName("userInfoButtonLayout");
 
-        VerticalLayout dialogLayout = new VerticalLayout(infoText,
-                warningText, buttonLayout);
-        dialogLayout.setPadding(false);
-        dialogLayout.setSpacing(false);
-        dialogLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
-        dialogLayout.getStyle().set("width", "18rem").set("max-width", "100%");
-
-        return dialogLayout;
+        return buttonLayout;
     }
 
     private Button generateLogoutButton(VaadinSession session) {
         Button logoutButton = new Button(getTranslation("userview_logout"));
+        logoutButton.addClassName("userInfoButton");
         logoutButton.addClickListener(e -> logoutUser(session));
 
         return logoutButton;
@@ -100,5 +77,14 @@ public class UserView extends HorizontalLayout {
 
         VaadinSession.setCurrent(session);
         ViewRedirectionUtility.redirectToView(MainView.class);
+    }
+
+    private Button generateRestoreBackupButton(Dialog dialog) {
+        Button restoreBackupButton = new Button(getTranslation("userview_restore_button"));
+        restoreBackupButton.addClassName("userInfoButton");
+        restoreBackupButton.getStyle().set("color", "red");
+        restoreBackupButton.addClickListener(e -> dialog.open());
+
+        return restoreBackupButton;
     }
 }
