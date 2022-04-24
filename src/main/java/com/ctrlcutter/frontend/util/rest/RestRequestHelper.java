@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.ArrayList;
@@ -32,18 +33,19 @@ import com.sun.jersey.api.client.WebResource;
 public class RestRequestHelper {
 
     public static final String BASE_URL = "http://localhost:8080/";
+    public static final String WEB_URL = "http://localhost:8089/";
     public static final String APPLICATION_TYPE = "application/json";
     private static final String API_USERNAME = "ctrlcutter";
     private static final String API_PASSWORD = "test123password456sick789";
 
     public static SessionDTO registerUser(RegistrationUserDTO user) {
-        HttpResponse<String> response = executeModificationRequestWithEntity(BASE_URL + "customer/signup/", user);
+        HttpResponse<String> response = executeModificationRequestWithEntity(WEB_URL + "customer/signup/", user);
         SessionDTO session = JsonMapper.mapJsonToObject(response.body(), SessionDTO.class);
         return session;
     }
 
     public static SessionDTO loginUser(LoginUserDTO user) {
-        HttpResponse<String> response = executeModificationRequestWithEntity(BASE_URL + "customer/login/", user);
+        HttpResponse<String> response = executeModificationRequestWithEntity(WEB_URL + "customer/login/", user);
         SessionDTO session = JsonMapper.mapJsonToObject(response.body(), SessionDTO.class);
         return session;
     }
@@ -105,11 +107,11 @@ public class RestRequestHelper {
         try {
             HttpResponse<String> response = client.send(req, BodyHandlers.ofString());
             responseJson = response.body();
-            
-            if(response.statusCode() == 404) {
+
+            if (response.statusCode() == 404) {
                 return "";
             }
-            
+
         } catch (IOException | InterruptedException e) {
             System.err.println("Request execution of client during REST-API call failed." + System.lineSeparator() + e.toString());
             return "";
@@ -120,7 +122,7 @@ public class RestRequestHelper {
     public static SessionUserDTO retrieveUserInformation(String sessionKey) {
         HttpClient client = HttpClient.newHttpClient();
 
-        HttpRequest req = HttpRequest.newBuilder(URI.create(BASE_URL + "customer/customerData")).header("content-type", APPLICATION_TYPE)
+        HttpRequest req = HttpRequest.newBuilder(URI.create(WEB_URL + "customer/customerData")).header("content-type", APPLICATION_TYPE)
                 .header("sessionkey", sessionKey).header("Authorization", generateBasicAuthHeaderValue()).GET().build();
 
         try {
@@ -136,12 +138,31 @@ public class RestRequestHelper {
         String json = JsonMapper.mapObjectToJson(scriptDTO);
         return makeGenericRESTRequest("script/basic/", json);
     }
-    
+
     public static ResponseEntity<String> editBasicScript(com.ctrlcutter.frontend.entities.rest.BasicScriptDTO scriptDTO, String id) {
         String json = JsonMapper.mapObjectToJson(scriptDTO);
         return makeGenericPutRequest("edit/basicScript/", json, id);
     }
-    
+
+    public static boolean backupScripts(String sessionKey) {
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest req = HttpRequest.newBuilder(URI.create(BASE_URL + "storage/backupToWeb")).header("content-type", APPLICATION_TYPE)
+                .header("Authorization", generateBasicAuthHeaderValue()).header("sessionkey", sessionKey).POST(BodyPublishers.noBody()).build();
+        try {
+            HttpResponse<String> response = client.send(req, BodyHandlers.ofString());
+
+            if (response.statusCode() == 404) {
+                return false;
+            }
+
+            return true;
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Request execution of client during REST-API call failed." + System.lineSeparator() + e.toString());
+            return false;
+        }
+    }
+
     private static ResponseEntity<String> makeGenericPutRequest(String endpoint, String body, String id) {
         try {
             Client client = Client.create();

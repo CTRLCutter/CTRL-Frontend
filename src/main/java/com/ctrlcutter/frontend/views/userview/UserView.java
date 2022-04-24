@@ -9,6 +9,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
@@ -55,6 +56,16 @@ public class UserView extends HorizontalLayout {
 
         Button backupButton = new Button(getTranslation("userview_backup_button"));
         backupButton.addClassName("userInfoButton");
+        backupButton.addClickListener(e -> {
+            String sessionKey = (String)session.getAttribute("sessionKey");
+            boolean backupSuccessful = RestRequestHelper.backupScripts(sessionKey);
+            
+            if(backupSuccessful) {
+                Notification.show("Backup Successful.");
+            } else {
+                Notification.show("Backup Failed.");
+            }
+        });
 
         Button restoreBackupButton = generateRestoreBackupButton(dialog);
 
