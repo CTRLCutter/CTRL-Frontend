@@ -136,6 +136,30 @@ public class RestRequestHelper {
         String json = JsonMapper.mapObjectToJson(scriptDTO);
         return makeGenericRESTRequest("script/basic/", json);
     }
+    
+    public static ResponseEntity<String> editBasicScript(com.ctrlcutter.frontend.entities.rest.BasicScriptDTO scriptDTO, String id) {
+        String json = JsonMapper.mapObjectToJson(scriptDTO);
+        return makeGenericPutRequest("edit/basicScript/", json, id);
+    }
+    
+    private static ResponseEntity<String> makeGenericPutRequest(String endpoint, String body, String id) {
+        try {
+            Client client = Client.create();
+            WebResource webResource = client.resource(BASE_URL + endpoint + "?id=" + id);
+            ClientResponse response = webResource.type(APPLICATION_TYPE).put(ClientResponse.class, body);
+
+            if (response.getStatus() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+            }
+
+            String output = response.getEntity(String.class);
+
+            return new ResponseEntity<>(output, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("REST Request failed.", HttpStatus.BAD_REQUEST);
+        }
+    }
 
     private static ResponseEntity<String> makeGenericRESTRequest(String endpoint, String body) {
         try {
@@ -151,7 +175,6 @@ public class RestRequestHelper {
 
             return new ResponseEntity<>(output, HttpStatus.OK);
         } catch (Exception e) {
-
             e.printStackTrace();
             return new ResponseEntity<>("REST Request failed.", HttpStatus.BAD_REQUEST);
         }

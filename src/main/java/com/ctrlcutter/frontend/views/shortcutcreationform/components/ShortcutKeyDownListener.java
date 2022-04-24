@@ -33,11 +33,9 @@ public class ShortcutKeyDownListener implements ComponentEventListener<KeyDownEv
 
     @Override
     public void onComponentEvent(KeyDownEvent event) {
-
         Key eventKey = event.getKey();
 
         if (Key.isModifier(eventKey)) {
-
             Iterator<KeyModifier> it = event.getModifiers().iterator();
 
             shortcutResetValue = false;
@@ -45,7 +43,6 @@ public class ShortcutKeyDownListener implements ComponentEventListener<KeyDownEv
             addToModifierKeyValueList(it);
 
         } else {
-
             currentKey = eventKey;
             shortcutResetValue = true;
         }
@@ -65,9 +62,7 @@ public class ShortcutKeyDownListener implements ComponentEventListener<KeyDownEv
     }
 
     private void addToModifierKeyValueList(Iterator<KeyModifier> iterator) {
-
         while (iterator.hasNext()) {
-
             KeyModifier modifier = iterator.next();
 
             Optional<ModifierKeys> modifierKeyOptional = ModifierKeys.convertModifierKeyFormat(modifier);
@@ -80,23 +75,23 @@ public class ShortcutKeyDownListener implements ComponentEventListener<KeyDownEv
     }
 
     private void clearModifiers() {
-
         modifierKeyValues = new HashSet<>();
         modifierKeys = new HashSet<>();
     }
 
     public Shortcut getCurrentShortcut() {
-
         return this.currentShortcut;
+    }
+    
+    public void setCurrentShortcut(Shortcut shortcut) {
+        this.currentShortcut = shortcut;
     }
 
     protected void clearValues() {
-
         this.currentKey = null;
         this.modifierKeyValues = new HashSet<>();
         this.modifierKeys = new HashSet<>();
         this.shortcutResetValue = false;
         this.currentShortcut = null;
     }
-
 }

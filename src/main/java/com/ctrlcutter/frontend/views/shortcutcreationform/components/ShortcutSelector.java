@@ -9,13 +9,13 @@ import com.vaadin.flow.component.textfield.TextField;
 public class ShortcutSelector extends CustomField<Shortcut> {
 
     private Label shortcutLabel;
+    private TextField shortcutInputField;
     private ShortcutKeyDownListener keyDownListener;
 
     public ShortcutSelector() {
-
         this.shortcutLabel = new Label();
 
-        TextField shortcutInputField = new TextField();
+        this.shortcutInputField = new TextField();
         shortcutInputField.setId("shortcutInputField");
         shortcutInputField.setPlaceholder("Enter your Shortcut");
 
@@ -39,8 +39,8 @@ public class ShortcutSelector extends CustomField<Shortcut> {
     }
 
     @Override
-    protected void setPresentationValue(Shortcut shortcut) {
-        this.shortcutLabel.setText(shortcut.getStringRepresentation());
+    public void setPresentationValue(Shortcut shortcut) {
+        this.keyDownListener.setCurrentShortcut(shortcut);
+        this.shortcutInputField.setValue(shortcut.getStringRepresentation());
     }
-
 }

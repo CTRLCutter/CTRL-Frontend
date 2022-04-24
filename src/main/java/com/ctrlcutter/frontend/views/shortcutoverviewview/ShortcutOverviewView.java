@@ -10,8 +10,11 @@ import com.ctrlcutter.frontend.entities.shortcut.Shortcut;
 import com.ctrlcutter.frontend.util.mapper.ShortcutMapper;
 import com.ctrlcutter.frontend.util.rest.ShortcutHelper;
 import com.ctrlcutter.frontend.util.script.WindowsProcessKiller;
+import com.ctrlcutter.frontend.views.shortcuteditform.predefinedform.PredefinedShortcutEditForm;
+import com.ctrlcutter.frontend.views.shortcuteditform.textform.TextShortcutEditForm;
 import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuSidebarOptions;
 import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.SidebarLayout;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H2;
@@ -23,7 +26,9 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteParameters;
 import com.vaadin.flow.router.WildcardParameter;
+import com.vaadin.flow.router.internal.HasUrlParameterFormat;
 
 @PageTitle("Shortcut Overview")
 @Route(value = "shortcutOverview")
@@ -111,7 +116,14 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
         Button editButton = new Button(getTranslation("overview_edit_button_title"));
         editButton.addClassName("overviewButton");
         editButton.addClickListener(e -> {
-            Notification.show("Edit button stub.");
+            if (this.type.equals("predefined")) {
+                UI.getCurrent().navigate(PredefinedShortcutEditForm.class, String.valueOf(this.shortcutId));
+            } else {
+                BasicScriptDTO scriptDTO = ShortcutHelper.getShortcutById(this.shortcutId);
+                OverviewShortcutType shortcutType = OverviewShortcutType.getShortcutTypeByCommand(scriptDTO.getCommand());
+                
+                UI.getCurrent().navigate(shortcutType.getEditView(), HasUrlParameterFormat.getParameters(String.valueOf(this.shortcutId)));
+            }
         });
 
         return editButton;
