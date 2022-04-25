@@ -1,11 +1,16 @@
 package com.ctrlcutter.frontend.views.userview;
 
+import java.util.List;
+
+import com.ctrlcutter.frontend.entities.rest.BackupScriptDTO;
+import com.ctrlcutter.frontend.util.rest.RestRequestHelper;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.server.VaadinSession;
 
 public class BackupRestoreWarningDialog extends Dialog {
 
@@ -50,7 +55,12 @@ public class BackupRestoreWarningDialog extends Dialog {
     private Button generateDialogConfirmButton() {
         Button confirmButton = new Button(getTranslation("restore_backup_confirm_button_title"));
         confirmButton.addClassName(buttonClassName);
-        confirmButton.addClickListener(e -> close());
+        confirmButton.addClickListener(e -> {
+            VaadinSession session = VaadinSession.getCurrent();
+            String sessionKey = (String) session.getAttribute("sessionKey");
+            List<BackupScriptDTO> backups = RestRequestHelper.retrieveBackup(sessionKey);
+            //TODO WORK WITH THIS...
+        });
         confirmButton.getStyle().set("color", "green");
 
         return confirmButton;
