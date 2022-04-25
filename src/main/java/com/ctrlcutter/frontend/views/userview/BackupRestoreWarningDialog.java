@@ -3,34 +3,24 @@ package com.ctrlcutter.frontend.views.userview;
 import java.util.List;
 
 import com.ctrlcutter.frontend.entities.rest.BackupScriptDTO;
+import com.ctrlcutter.frontend.util.provider.SessionKeyProvider;
 import com.ctrlcutter.frontend.util.rest.RestRequestHelper;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.server.VaadinSession;
 
-public class BackupRestoreWarningDialog extends Dialog {
-
-    private final String buttonClassName = "userInfoButton";
+public class BackupRestoreWarningDialog extends AbstractBackupDialog {
 
     public BackupRestoreWarningDialog() {
         add(createDialogLayout());
     }
 
     private VerticalLayout createDialogLayout() {
-        Paragraph infoText = new Paragraph(getTranslation("dialog_info_text"));
-        Paragraph warningText = new Paragraph(getTranslation("dialog_info_warning"));
-
+        Paragraph infoText = new Paragraph(getTranslation("restore_dialog_info_text"));
+        Paragraph warningText = new Paragraph(getTranslation("restore_dialog_info_warning"));
         HorizontalLayout buttonLayout = generateDialogButtonLayout();
-
-        VerticalLayout dialogLayout = new VerticalLayout(infoText, warningText, buttonLayout);
-        dialogLayout.setPadding(false);
-        dialogLayout.setSpacing(false);
-        dialogLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
-        dialogLayout.getStyle().set("width", "18rem").set("max-width", "100%");
+        VerticalLayout dialogLayout = new DialogLayout(infoText, warningText, buttonLayout);
 
         return dialogLayout;
     }
@@ -44,22 +34,14 @@ public class BackupRestoreWarningDialog extends Dialog {
         return buttonLayout;
     }
 
-    private Button generateDialogCancelButton() {
-        Button cancelButton = new Button(getTranslation("restore_backup_cancel_button_title"));
-        cancelButton.addClassName(buttonClassName);
-        cancelButton.addClickListener(e -> close());
-
-        return cancelButton;
-    }
-
     private Button generateDialogConfirmButton() {
         Button confirmButton = new Button(getTranslation("restore_backup_confirm_button_title"));
         confirmButton.addClassName(buttonClassName);
         confirmButton.addClickListener(e -> {
-            VaadinSession session = VaadinSession.getCurrent();
-            String sessionKey = (String) session.getAttribute("sessionKey");
+            String sessionKey = SessionKeyProvider.getSessionKey();
             List<BackupScriptDTO> backups = RestRequestHelper.retrieveBackup(sessionKey);
             //TODO WORK WITH THIS...
+            close();
         });
         confirmButton.getStyle().set("color", "green");
 

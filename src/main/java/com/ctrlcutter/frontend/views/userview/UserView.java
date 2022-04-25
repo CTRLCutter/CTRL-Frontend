@@ -1,6 +1,7 @@
 package com.ctrlcutter.frontend.views.userview;
 
 import com.ctrlcutter.frontend.dtos.SessionUserDTO;
+import com.ctrlcutter.frontend.util.provider.SessionKeyProvider;
 import com.ctrlcutter.frontend.util.rest.RestRequestHelper;
 import com.ctrlcutter.frontend.util.ui.ViewRedirectionUtility;
 import com.ctrlcutter.frontend.views.mainview.MainView;
@@ -9,7 +10,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
@@ -25,10 +25,10 @@ public class UserView extends HorizontalLayout {
         setId("userView");
 
         VaadinSession session = VaadinSession.getCurrent();
-        Object sessionKey = session.getAttribute("sessionKey");
+        String sessionKey = SessionKeyProvider.getSessionKey();
 
         // Session ID at this point cannot be null since the check already happed at the initialisation of the redirection button.
-        SessionUserDTO sessionUser = RestRequestHelper.retrieveUserInformation((String) sessionKey);
+        SessionUserDTO sessionUser = RestRequestHelper.retrieveUserInformation(sessionKey);
 
         SidebarLayout sidebarLayout = new SidebarLayout();
 
@@ -54,18 +54,11 @@ public class UserView extends HorizontalLayout {
     private HorizontalLayout generateButtonLayout(VaadinSession session, Dialog dialog) {
         Button logoutButton = generateLogoutButton(session);
 
+        Dialog backupDialog = new BackupInformationDialog();
+
         Button backupButton = new Button(getTranslation("userview_backup_button"));
         backupButton.addClassName("userInfoButton");
-        backupButton.addClickListener(e -> {
-            String sessionKey = (String)session.getAttribute("sessionKey");
-            boolean backupSuccessful = RestRequestHelper.backupScripts(sessionKey);
-            
-            if(backupSuccessful) {
-                Notification.show("Backup Successful.");
-            } else {
-                Notification.show("Backup Failed.");
-            }
-        });
+        backupButton.addClickListener(e -> backupDialog.open());
 
         Button restoreBackupButton = generateRestoreBackupButton(dialog);
 

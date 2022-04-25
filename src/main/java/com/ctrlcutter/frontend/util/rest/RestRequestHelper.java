@@ -124,11 +124,12 @@ public class RestRequestHelper {
         return makeGenericPutRequest("edit/basicScript/", json, id);
     }
 
-    public static boolean backupScripts(String sessionKey) {
+    public static boolean backupScripts(String sessionKey, boolean saveAll) {
         HttpClient client = HttpClient.newHttpClient();
 
-        HttpRequest req = HttpRequest.newBuilder(URI.create(BASE_URL + "storage/backupToWeb")).header("content-type", APPLICATION_TYPE)
-                .header("Authorization", generateBasicAuthHeaderValue()).header("sessionkey", sessionKey).POST(BodyPublishers.noBody()).build();
+        HttpRequest req =
+                HttpRequest.newBuilder(URI.create(BASE_URL + "storage/backupToWeb?saveAll=" + String.valueOf(saveAll))).header("content-type", APPLICATION_TYPE)
+                        .header("Authorization", generateBasicAuthHeaderValue()).header("sessionkey", sessionKey).POST(BodyPublishers.noBody()).build();
         try {
             HttpResponse<String> response = client.send(req, BodyHandlers.ofString());
             if (response.statusCode() == 404) {
