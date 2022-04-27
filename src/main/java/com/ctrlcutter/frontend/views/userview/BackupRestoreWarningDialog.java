@@ -1,8 +1,5 @@
 package com.ctrlcutter.frontend.views.userview;
 
-import java.util.List;
-
-import com.ctrlcutter.frontend.entities.rest.BackupScriptDTO;
 import com.ctrlcutter.frontend.util.provider.SessionKeyProvider;
 import com.ctrlcutter.frontend.util.rest.RestRequestHelper;
 import com.vaadin.flow.component.button.Button;
@@ -39,8 +36,7 @@ public class BackupRestoreWarningDialog extends AbstractBackupDialog {
         confirmButton.addClassName(buttonClassName);
         confirmButton.addClickListener(e -> {
             String sessionKey = SessionKeyProvider.getSessionKey();
-            List<BackupScriptDTO> backups = RestRequestHelper.retrieveBackup(sessionKey);
-            //TODO WORK WITH THIS...
+            RestRequestHelper.retrieveBackup(sessionKey);
             close();
         });
         confirmButton.getStyle().set("color", "green");

@@ -8,11 +8,13 @@ import com.ctrlcutter.frontend.dtos.BasicScriptDTO;
 import com.ctrlcutter.frontend.dtos.PredefinedScriptDTO;
 import com.ctrlcutter.frontend.entities.shortcut.Shortcut;
 import com.ctrlcutter.frontend.util.mapper.ShortcutMapper;
+import com.ctrlcutter.frontend.util.rest.RestRequestHelper;
 import com.ctrlcutter.frontend.util.rest.ShortcutHelper;
 import com.ctrlcutter.frontend.util.script.WindowsProcessKiller;
+import com.ctrlcutter.frontend.util.ui.ViewRedirectionUtility;
 import com.ctrlcutter.frontend.views.shortcuteditform.predefinedform.PredefinedShortcutEditForm;
-import com.ctrlcutter.frontend.views.shortcuteditform.textform.TextShortcutEditForm;
 import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuSidebarOptions;
+import com.ctrlcutter.frontend.views.shortcutmenuview.ShortcutMenuView;
 import com.ctrlcutter.frontend.views.shortcutmenuview.sublayouts.SidebarLayout;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -26,7 +28,6 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteParameters;
 import com.vaadin.flow.router.WildcardParameter;
 import com.vaadin.flow.router.internal.HasUrlParameterFormat;
 
@@ -121,7 +122,7 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
             } else {
                 BasicScriptDTO scriptDTO = ShortcutHelper.getShortcutById(this.shortcutId);
                 OverviewShortcutType shortcutType = OverviewShortcutType.getShortcutTypeByCommand(scriptDTO.getCommand());
-                
+
                 UI.getCurrent().navigate(shortcutType.getEditView(), HasUrlParameterFormat.getParameters(String.valueOf(this.shortcutId)));
             }
         });
@@ -134,7 +135,8 @@ public class ShortcutOverviewView extends HorizontalLayout implements HasUrlPara
         deleteButton.addClassName("overviewButton");
         deleteButton.setId("deleteButton");
         deleteButton.addClickListener(e -> {
-            Notification.show("Delete button stub.");
+            RestRequestHelper.deleteMacro(this.type, this.shortcutId);
+            ViewRedirectionUtility.redirectToView(ShortcutMenuView.class);
         });
 
         return deleteButton;

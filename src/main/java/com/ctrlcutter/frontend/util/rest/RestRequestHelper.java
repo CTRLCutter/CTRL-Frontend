@@ -22,7 +22,6 @@ import com.ctrlcutter.frontend.dtos.PredefinedScriptDTO;
 import com.ctrlcutter.frontend.dtos.RegistrationUserDTO;
 import com.ctrlcutter.frontend.dtos.SessionDTO;
 import com.ctrlcutter.frontend.dtos.SessionUserDTO;
-import com.ctrlcutter.frontend.entities.rest.BackupScriptDTO;
 import com.ctrlcutter.frontend.util.rest.exception.APIRequestException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -143,38 +142,32 @@ public class RestRequestHelper {
         }
     }
 
-    public static List<BackupScriptDTO> retrieveBackup(String sessionKey) {
-        String responseJson = executeGetRequestWithSessionKey(WEB_URL, "scripts/getAll", sessionKey);
-        ObjectMapper mapper = new ObjectMapper();
+    public static void retrieveBackup(String sessionKey) {
+        HttpRequest req = HttpRequest.newBuilder(URI.create(BASE_URL + "storage/retrieveFromWeb")).header("content-type", APPLICATION_TYPE)
+                .header("Authorization", generateBasicAuthHeaderValue()).header("sessionkey", sessionKey).POST(BodyPublishers.noBody()).build();
+        sendHttpRequest(req);
+    }
 
-        try {
-            if (responseJson.equals("")) {
-                return new ArrayList<>();
-            }
+    public static void deleteMacro(String type, long id) {
+        String endpoint = "storage/deleteBasic";
 
-            List<BackupScriptDTO> list =
-                    mapper.readValue(responseJson, TypeFactory.defaultInstance().constructCollectionType(List.class, BackupScriptDTO.class));
-            return list;
-        } catch (JsonProcessingException e) {
-            throw new APIRequestException("Request execution of client during REST-API call failed.", e);
+        if (type.equals("predefined")) {
+            endpoint = "storage/deletePredefined";
         }
+
+        HttpRequest req = HttpRequest.newBuilder(URI.create(BASE_URL + endpoint + "?id=" + id)).header("content-type", APPLICATION_TYPE)
+                .header("Authorization", generateBasicAuthHeaderValue()).DELETE().build();
+        sendHttpRequest(req);
     }
 
     private static String executeGetRequest(String baseUrl, String endpoint) {
         HttpRequest req = HttpRequest.newBuilder(URI.create(baseUrl + endpoint)).header("content-type", APPLICATION_TYPE)
                 .header("Authorization", generateBasicAuthHeaderValue()).GET().build();
 
-        return sendGetRequest(req);
+        return sendHttpRequest(req);
     }
 
-    private static String executeGetRequestWithSessionKey(String baseUrl, String endpoint, String sessionKey) {
-        HttpRequest req = HttpRequest.newBuilder(URI.create(baseUrl + endpoint)).header("content-type", APPLICATION_TYPE)
-                .header("Authorization", generateBasicAuthHeaderValue()).header("sessionkey", sessionKey).GET().build();
-
-        return sendGetRequest(req);
-    }
-
-    private static String sendGetRequest(HttpRequest req) {
+    private static String sendHttpRequest(HttpRequest req) {
         String responseJson = "";
         HttpClient client = HttpClient.newHttpClient();
 
